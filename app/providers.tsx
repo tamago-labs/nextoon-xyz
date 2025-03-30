@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-import { Authenticator, useTheme, View, Heading, Image, Text, Button, ThemeProvider, Theme } from '@aws-amplify/ui-react';
-
 import { Divide, Menu, X } from "react-feather"
 import { PropsWithChildren } from 'react';
 
@@ -18,38 +16,34 @@ import Link from "next/link"
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 
-import outputs from "@/amplify_outputs.json";
+import { Web3OnboardProvider, init } from '@web3-onboard/react'
+import injectedModule from '@web3-onboard/injected-wallets'
 
-Amplify.configure(outputs);
+// const INFURA_KEY = ''
 
-const components = {
-    Header() {
-        const { tokens } = useTheme();
+const baseSepoliaTestnet = {
+    id: 84532,
+    token: 'ETH',
+    label: 'Sepolia',
+    rpcUrl: 'https://sepolia.base.org'
+}
 
-        return (
-            <View textAlign="center" padding={tokens.space.large}>
-                {/* <Link href="/" className="inline-flex">
-                    <div className="relative px-4 py-2 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-md flex items-center shadow-lg shadow-purple-900/20">
-                        <div className="absolute inset-0 bg-black opacity-20 rounded-md"></div>
+const chains = [baseSepoliaTestnet]
+const wallets = [injectedModule()]
 
-                        <h1 className="font-bold text-white text-lg relative z-10">Tamago Labs</h1>
-                    </div>
-                </Link> */}
-            </View>
-        );
-    },
-    Footer() {
-        const { tokens } = useTheme();
+const web3Onboard = init({
+    wallets,
+    chains,
+    appMetadata: {
+        name: 'Web3-Onboard Demo',
+        icon: '<svg>App Icon</svg>',
+        description: 'A demo of Web3-Onboard.'
+    }
+})
 
-        return (
-            <View textAlign="center" padding={tokens.space.large}>
-                {/* <Text color={tokens.colors.black}>
-                    Secured by AWS Cognito
-                </Text> */}
-            </View>
-        );
-    },
-};
+// import outputs from "@/amplify_outputs.json";
+
+// Amplify.configure(outputs);
 
 export function Providers({ children }: any) {
 
@@ -74,36 +68,19 @@ export function Providers({ children }: any) {
 
     });
 
-    const { tokens } = useTheme()
 
-    const theme: Theme = {
-        name: 'Auth Theme',
-        tokens: {
-            components: {
-                authenticator: {
-                    router: {
-                        boxShadow: `0 0 16px ${tokens.colors.overlay['10']}`,
-                        borderWidth: '0'
-                    }
-                },
-                tabs: {
-                    item: {
-                        backgroundColor: "#E0E0E0",
-                        borderColor: "#E0E0E0"
-                    },
-                },
-            },
-        },
-    }
 
     return (
-        <ThemeProvider theme={theme} >
-            <View className="min-h-screen relative ">
-                <Authenticator components={components}>
+        <>
+            {showLoader ?
+                <Loading />
+                :
+                <Web3OnboardProvider web3Onboard={web3Onboard}>
                     {children}
-                </Authenticator>
-            </View>
-        </ThemeProvider>
+                </Web3OnboardProvider>
+            }
+
+        </>
     );
 }
 

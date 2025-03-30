@@ -5,10 +5,12 @@ import "./globals.css"
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+import { Providers } from "./providers"
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Torotoon - AI-Powered Webtoon Platform",
+  title: "NexToon - Webtoons Where AI Meets Crypto on Base L2",
   description: "Torotoon leverages AI for seamless content translation and localization, bringing global webtoons to a wider audience.",
 };
 
@@ -31,9 +33,11 @@ export default function RootLayout({
               <div className="absolute bottom-40 left-40 w-80 h-80 bg-gradient-to-r from-blue-400 to-sky-400 rounded-full blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '4s' }}></div>
             </div>
           </div>
-          <Header /> 
-          {children}
-          <Footer/>
+          <Providers>
+            <Header />
+            {children}
+            <Footer />
+          </Providers> 
         </div>
 
       </body>

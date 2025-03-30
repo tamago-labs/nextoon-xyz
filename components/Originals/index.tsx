@@ -56,7 +56,7 @@ const OriginalContainer = () => {
                 {/* Header */}
                 <div className="text-center mb-12">
                     <div className="flex flex-col items-center justify-between mb-8">
-                        <h2 className="text-4xl mx-auto font-bold bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent">ToroToon Originals</h2>
+                        <h2 className="text-4xl mx-auto font-bold bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent">NexToon Originals</h2>
                         <p className="text-xl mt-4 text-gray-600 max-w-3xl mx-auto">
                             Exclusive stories crafted by exceptional creators, available only on our platform.
                         </p>

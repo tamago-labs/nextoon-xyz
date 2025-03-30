@@ -13,11 +13,24 @@ const Subscribe = () => {
                     </svg>
                 </div>
                 <div className="relative z-10 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Become a Creator</h2>
-                    <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">Join our global community of creators and share your stories with the world. Our AI-powered platform will help translate your work into multiple languages.</p>
-                    <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium shadow-lg hover:bg-blue-50 transition-colors">
-                        Start Creating
-                    </button>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Launch Your Webtoon Universe</h2>
+                    <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">Create branching storylines where your community shapes the narrative through NFT-powered voting. Our AI tools suggest compelling plot directions while you maintain creative control.</p>
+                    <div className="flex flex-col sm:flex-row justify-center gap-4">
+                        <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium shadow-lg hover:bg-blue-50 transition-colors">
+                            Start Creating
+                        </button>
+                        <button className="bg-blue-700 text-white border border-blue-200 px-8 py-3 rounded-lg font-medium shadow-lg hover:bg-blue-800 transition-colors">
+                            Watch Demo
+                        </button>
+                    </div>
+                    {/* <div className="mt-8 flex justify-center items-center gap-2">
+                        <div className="flex -space-x-2">
+                            <div className="w-8 h-8 rounded-full bg-blue-300 border-2 border-white"></div>
+                            <div className="w-8 h-8 rounded-full bg-blue-400 border-2 border-white"></div>
+                            <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-white"></div>
+                        </div>
+                        <p className="text-blue-100 text-sm">Join 247+ creators already building on NexToon</p>
+                    </div> */}
                 </div>
             </div>
         </section>

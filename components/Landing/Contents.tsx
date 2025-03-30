@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ChevronRight, Globe, Speaker, ArrowRight, BookOpen, Clock, TrendingUp } from "react-feather"
-
+import Link from "next/link";
 
 const Contents = () => {
 
@@ -41,11 +41,13 @@ const Contents = () => {
 
             {/* Featured Webtoons */}
             <section className="mb-16">
-                <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent">Editor's Picks</h2>
-                    <a href="#" className="text-blue-500 hover:text-blue-700 text-sm font-medium flex items-center">
+                <div className="flex  mb-8">
+                    <h2 className="text-3xl font-bold  my-auto bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent">
+                        NexToon Originals
+                    </h2>
+                    <Link href="/originals" className="text-blue-500 ml-auto my-auto  hover:text-blue-700 text-sm font-medium flex items-center">
                         View All <ChevronRight size={16} />
-                    </a>
+                    </Link>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {featuredWebtoons.map((webtoon: any) => (
@@ -83,7 +85,7 @@ const Contents = () => {
 
 
             {/* Categories Bar */}
-            <div className="bg-white bg-opacity-70 backdrop-blur-lg p-2 rounded-2xl mb-12 sticky top-20 z-30 shadow-md">
+            {/* <div className="bg-white bg-opacity-70 backdrop-blur-lg p-2 rounded-2xl mb-12 sticky top-20 z-30 shadow-md">
                 <div className="flex overflow-x-auto space-x-4 py-2 px-4 scrollbar-hide">
                     {categories.map(category => (
                         <button
@@ -98,11 +100,11 @@ const Contents = () => {
                         </button>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             {/* Content Grids */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {/* Popular Now */}
+            {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
                 <section>
                     <div className="flex items-center mb-6">
                         <div className="bg-blue-100 p-2 rounded-lg mr-3">
@@ -131,8 +133,7 @@ const Contents = () => {
                         ))}
                     </div>
                 </section>
-
-                {/* New Releases */}
+ 
                 <section>
                     <div className="flex items-center mb-6">
                         <div className="bg-blue-100 p-2 rounded-lg mr-3">
@@ -161,7 +162,7 @@ const Contents = () => {
                         ))}
                     </div>
                 </section>
-            </div>
+            </div> */}
 
 
 

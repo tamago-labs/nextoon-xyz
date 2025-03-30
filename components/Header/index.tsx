@@ -4,10 +4,11 @@ import { useState } from "react"
 import { Menu, X, Search, Bell, User, Globe, ChevronDown } from "react-feather"
 import Link from "next/link"
 import { useRouter, usePathname } from 'next/navigation'
-import AuthButton from "./AuthButton"
+import ConnectButton from "./ConnectButton"
+
 
 const Header = () => {
- 
+
   const pathname = usePathname()
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,17 +46,17 @@ const Header = () => {
             </button>
 
             <div className="flex-shrink-0 flex items-center">
-              <div className="flex items-center">
-                <img src="./images/torotoon-logo-2.png" className="w-[160px]" alt="logo" />
-              </div>
+              <Link href="/" className="flex mb-0 lg:mb-1 items-center">
+                <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">NexToon</span>
+              </Link>
             </div>
 
             <div className="hidden lg:ml-8 lg:flex lg:space-x-8">
-              <Link href="/" className={` ${pathname === "/" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"}  px-3 py-5 text-sm font-medium`}>Home</Link>
+              {/* <Link href="/" className={` ${pathname === "/" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"}  px-3 py-5 text-sm font-medium`}>Home</Link> */}
               <Link href="/originals" className={`${pathname === "/originals" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Originals</Link>
-              <Link href="/genres" className={`${pathname === "/genres" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Genres</Link>
-              {/* <Link href="/rankings" className={`${pathname === "/rankings" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Rankings</Link> */}
+              <Link href="/voting" className={`${pathname === "/voting" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Voting</Link>
               <Link href="/create" className={`${pathname === "/create" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Create</Link>
+              <Link href="/profile" className={`${pathname === "/profile" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Profile</Link>
             </div>
           </div>
 
@@ -72,35 +73,6 @@ const Header = () => {
               />
             </div>
 
-            {/* Language Switcher */}
-            <div className="relative">
-              <button
-                className="flex items-center text-gray-700 hover:text-blue-600 px-2 py-1.5 rounded-md hover:bg-blue-50"
-                onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
-                aria-expanded={isLanguageMenuOpen}
-                aria-haspopup="true"
-              >
-                <Globe size={18} className="mr-1" />
-                <span className="hidden sm:inline-block text-sm mr-1">{currentLanguage}</span>
-                <ChevronDown size={16} />
-              </button>
-
-              {isLanguageMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 ring-1 ring-black ring-opacity-5">
-                  {languages.map((language) => (
-                    <button
-                      key={language.code}
-                      className={`${language.name === currentLanguage ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
-                        } group flex items-center w-full px-4 py-2 text-sm hover:bg-blue-50 hover:text-blue-600`}
-                      onClick={() => handleLanguageChange(language.name)}
-                    >
-                      {language.name}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
             {/* <button className="p-1.5 rounded-full text-gray-700 hover:bg-gray-200" aria-label="Notifications">
               <Bell size={20} />
             </button>
@@ -110,7 +82,7 @@ const Header = () => {
                 JP
               </div>
             </button> */}
-            <AuthButton/>
+            <ConnectButton />
           </div>
         </div>
 
@@ -118,11 +90,11 @@ const Header = () => {
         {isMenuOpen && (
           <div className="lg:hidden absolute bg-white rounded-b-lg" id="mobile-menu">
             <div className="pt-2 pb-3 space-y-1">
-              <Link href="/" className={` ${pathname === "/" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "}  block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Home</Link>
+              {/* <Link href="/" className={` ${pathname === "/" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "}  block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Home</Link> */}
               <Link href="/originals" className={`${pathname === "/originals" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Originals</Link>
-              <Link href="/genres" className={`${pathname === "/genres" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Genres</Link>
-              {/* <Link href="/rankings" className={`${pathname === "/rankings" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Rankings</Link> */}
+              <Link href="/voting" className={`${pathname === "/voting" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Voting</Link>
               <Link href="/create" className={`${pathname === "/create" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Create</Link>
+              <Link href="/profile" className={`${pathname === "/profile" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Profile</Link>
             </div>
 
             {/* Mobile Search */}
