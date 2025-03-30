@@ -24,7 +24,7 @@ const NewSeries = () => {
   // Handle genre selection
   const toggleGenre = (genre: any) => {
     if (selectedGenres.includes(genre)) {
-      setSelectedGenres(selectedGenres.filter(g => g !== genre));
+      setSelectedGenres(selectedGenres.filter((g: any) => g !== genre));
     } else {
       if (selectedGenres.length < 3) {
         setSelectedGenres([...selectedGenres, genre]);
