@@ -6,7 +6,7 @@ const NewSeries = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [seriesTitle, setSeriesTitle] = useState('');
   const [seriesDescription, setSeriesDescription] = useState('');
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState<any>([]);
   const [showAIAssist, setShowAIAssist] = useState(false);
   const [releaseSchedule, setReleaseSchedule] = useState('weekly');
   const [releaseDay, setReleaseDay] = useState('friday');
@@ -22,7 +22,7 @@ const NewSeries = () => {
   ];
 
   // Handle genre selection
-  const toggleGenre = (genre) => {
+  const toggleGenre = (genre: any) => {
     if (selectedGenres.includes(genre)) {
       setSelectedGenres(selectedGenres.filter(g => g !== genre));
     } else {
@@ -59,10 +59,10 @@ const NewSeries = () => {
                 <button
                   onClick={() => step < currentStep && setCurrentStep(step)}
                   className={`flex items-center justify-center w-8 h-8 rounded-full ${currentStep === step
-                      ? 'bg-blue-600 text-white'
-                      : currentStep > step
-                        ? 'bg-blue-100 text-blue-600'
-                        : 'bg-gray-200 text-gray-500'
+                    ? 'bg-blue-600 text-white'
+                    : currentStep > step
+                      ? 'bg-blue-100 text-blue-600'
+                      : 'bg-gray-200 text-gray-500'
                     } transition-colors ${step < currentStep ? 'cursor-pointer hover:bg-blue-200' : ''}`}
                 >
                   {currentStep > step ? <Check size={16} /> : step}
@@ -206,8 +206,8 @@ const NewSeries = () => {
                     key={genre}
                     onClick={() => toggleGenre(genre)}
                     className={`px-3 py-1.5 rounded-full text-sm ${selectedGenres.includes(genre)
-                        ? 'bg-blue-100 text-blue-800 border border-blue-300'
-                        : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                      ? 'bg-blue-100 text-blue-800 border border-blue-300'
+                      : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
                       } transition-colors`}
                   >
                     {genre}
@@ -221,8 +221,8 @@ const NewSeries = () => {
                 onClick={handleNextStep}
                 disabled={!seriesTitle || !seriesDescription || selectedGenres.length === 0}
                 className={`px-6 py-2 rounded-lg text-white ${!seriesTitle || !seriesDescription || selectedGenres.length === 0
-                    ? 'bg-gray-300 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700'
+                  ? 'bg-gray-300 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-700'
                   } transition-colors`}
               >
                 Next: Visual Assets
@@ -381,8 +381,8 @@ const NewSeries = () => {
                 onClick={handleNextStep}
                 disabled={!coverImage}
                 className={`px-6 py-2 rounded-lg text-white ${!coverImage
-                    ? 'bg-gray-300 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700'
+                  ? 'bg-gray-300 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-700'
                   } transition-colors`}
               >
                 Next: Publishing Settings
@@ -466,8 +466,8 @@ const NewSeries = () => {
                       key={day}
                       onClick={() => setReleaseDay(day)}
                       className={`py-2 rounded-md text-sm ${releaseDay === day
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         } transition-colors`}
                     >
                       {day.charAt(0).toUpperCase() + day.slice(1, 3)}

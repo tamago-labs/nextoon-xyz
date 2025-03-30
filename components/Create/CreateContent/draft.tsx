@@ -47,10 +47,10 @@ const ContinueDraft = () => {
   ];
 
   // Format relative time
-  const getRelativeTime = (dateString) => {
+  const getRelativeTime = (dateString: any) => {
     const date = new Date(dateString);
     const now = new Date();
-    const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
+    const diffInHours = Math.floor((now.valueOf() - date.valueOf()) / (1000 * 60 * 60));
     
     if (diffInHours < 1) return 'Less than an hour ago';
     if (diffInHours < 24) return `${diffInHours} hours ago`;
@@ -61,7 +61,7 @@ const ContinueDraft = () => {
   };
   
   // Status badges
-  const getStatusBadge = (status) => {
+  const getStatusBadge = (status: any) => {
     switch (status) {
       case 'inProgress':
         return (

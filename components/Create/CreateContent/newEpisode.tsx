@@ -4,8 +4,8 @@ import { Plus, Upload, BookOpen, Pencil, Clock, Check, X, ChevronDown, Image, Fi
 
 const NewEpisode = () => {
 
-    const [selectedSeries, setSelectedSeries] = useState(null);
-    const [uploadStep, setUploadStep] = useState(1);
+    const [selectedSeries, setSelectedSeries] = useState<any>(null);
+    const [uploadStep, setUploadStep] = useState<number>(1);
     const [uploadedImages, setUploadedImages] = useState([]);
     const [episodeTitle, setEpisodeTitle] = useState('');
     const [episodeDescription, setEpisodeDescription] = useState('');
@@ -42,7 +42,7 @@ const NewEpisode = () => {
 
                     {uploadStep === 1 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-9">
-                            {existingSeries.map((series) => (
+                            {existingSeries.map((series: any) => (
                                 <button
                                     key={series.id}
                                     onClick={() => {
@@ -300,7 +300,7 @@ const NewEpisode = () => {
                                     </div>
                                     <h4 className="font-medium text-gray-900 mb-1">Publish Now</h4>
                                     <p className="text-sm text-gray-600 text-center">Make your episode available to readers immediately</p>
-                                    <button className="mt-auto bg-blue-600 text-white w-full py-2 rounded-lg hover:bg-blue-700 transition-colors mt-4">
+                                    <button className="  bg-blue-600 text-white w-full py-2 rounded-lg hover:bg-blue-700 transition-colors mt-4">
                                         Publish Episode
                                     </button>
                                 </div>
@@ -345,7 +345,7 @@ const NewEpisode = () => {
                                     </div>
                                     <h4 className="font-medium text-gray-900 mb-1">Save as Draft</h4>
                                     <p className="text-sm text-gray-600 text-center">Save your work and continue editing later</p>
-                                    <button className="mt-auto bg-white border border-gray-300 text-gray-700 w-full py-2 rounded-lg hover:bg-gray-50 transition-colors mt-4">
+                                    <button className=" bg-white border border-gray-300 text-gray-700 w-full py-2 rounded-lg hover:bg-gray-50 transition-colors mt-4">
                                         Save Draft
                                     </button>
                                 </div>
