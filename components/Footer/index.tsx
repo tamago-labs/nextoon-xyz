@@ -29,15 +29,15 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-b border-blue-100 pb-8">
                     {/* Column 1: About */}
                     <div className="relative ">
-                        <div className="flex-shrink-0 flex items-center">
+                        <div className="flex-shrink-0 my-3 flex items-center">
                             <div className="flex items-center">
                                 <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">NexToon</span>
                             </div>
                         </div>
 
-                        <p className="text-gray-600 mb-4">
+                        {/* <p className="text-gray-600 mb-4">
                             Discovering and enjoying webtoons in your language has never been easier.
-                        </p>
+                        </p> */}
                         <div className="flex space-x-4">
                             <a href="#" className="text-blue-500 hover:text-blue-700">
                                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">

@@ -15,8 +15,7 @@ const HowItWorks = () => {
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8">
-                    {/* Feature 1 */}
+                {/* <div className="grid md:grid-cols-3 gap-8"> 
                     <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
                         <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                             <BookOpen className="h-6 w-6 text-blue-600" />
@@ -27,9 +26,7 @@ const HowItWorks = () => {
                         <p className="text-gray-600">
                             Mint episodes as limited NFTs. Each NFT grants you voting power to influence future storylines.
                         </p>
-                    </div>
-
-                    {/* Feature 2 */}
+                    </div> 
                     <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
                         <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                             <CheckCircle className="h-6 w-6 text-blue-600" />
@@ -38,9 +35,7 @@ const HowItWorks = () => {
                         <p className="text-gray-600">
                             Creators trigger AI to suggest compelling branch options, letting NFT holders vote on which direction the story should take.
                         </p>
-                    </div>
-
-                    {/* Feature 3 */}
+                    </div> 
                     <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
                         <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                             <Globe className="h-6 w-6 text-blue-600" />
@@ -52,9 +47,9 @@ const HowItWorks = () => {
                             As webtoons gain popularity, creators can set marketplace prices with earnings distributed among NFT holders.
                         </p>
                     </div>
-                </div>
+                </div> */}
 
-                <div className="mt-16">
+                {/* <div className="mt-16">
                     <h3 className="text-xl font-semibold text-center mb-6">AI-Generated Story Paths</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
                         <div className="bg-white p-4 rounded-lg shadow-sm">
@@ -73,7 +68,7 @@ const HowItWorks = () => {
                             <p className="text-xs text-gray-600">A long-buried secret emerges that changes everything</p>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
 
 
@@ -81,30 +76,38 @@ const HowItWorks = () => {
                 <div className="mt-16 bg-white rounded-xl overflow-hidden shadow-lg">
                     <div className="md:flex">
                         <div className="md:w-1/2 p-8">
-                            <h3 className="text-xl font-semibold text-gray-900 mb-4">Shape the Stories You Love</h3>
+                            <h3 className="text-xl font-semibold text-gray-900 mb-4">Co-own Success Stories</h3>
                             <p className="text-gray-600 mb-6">
-                                NexToon gives you the power to influence storylines through your NFT collection. Vote on AI-suggested plot directions and share in the success of stories you help create.
+                                NextToon gives you the power to influence storylines, allowing creators to trigger AI-generated branch options and letting token holders vote on the story’s direction.
                             </p>
                             <ul className="space-y-3">
                                 <li className="flex items-start">
                                     <Zap className="h-5 w-5 text-blue-500 mt-0.5 mr-2" />
-                                    <span className="text-gray-700">Collect NFTs to gain voting influence</span>
+                                    <span className="text-gray-700">
+                                        Collect digital tokens from DEX listings by creators
+                                    </span>
                                 </li>
                                 <li className="flex items-start">
                                     <Zap className="h-5 w-5 text-blue-500 mt-0.5 mr-2" />
-                                    <span className="text-gray-700">Vote on key story decisions</span>
+                                    <span className="text-gray-700">
+                                        Vote on key story decisions
+                                    </span>
                                 </li>
                                 <li className="flex items-start">
                                     <Zap className="h-5 w-5 text-blue-500 mt-0.5 mr-2" />
-                                    <span className="text-gray-700">Watch stories evolve based on community choices</span>
+                                    <span className="text-gray-700">
+                                        Watch stories evolve based on community choices
+                                    </span>
                                 </li>
                                 <li className="flex items-start">
                                     <Zap className="h-5 w-5 text-blue-500 mt-0.5 mr-2" />
-                                    <span className="text-gray-700">Share revenue when storylines succeed</span>
+                                    <span className="text-gray-700">
+                                        Share in the revenue when storylines succeed
+                                    </span>
                                 </li>
                             </ul>
                             <button className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium shadow-md transition-colors">
-                                Join a Storyline Vote
+                                Become a Creator
                             </button>
                         </div>
                         <div className="md:w-1/2 bg-gray-100 flex items-center justify-center p-6">
@@ -158,7 +161,7 @@ const HowItWorks = () => {
                                     </div>
 
                                     <div className="flex justify-between">
-                                        <button className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs rounded-lg">Your NFTs: 3</button>
+                                        <button className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs rounded-lg">Your tokens: 3</button>
                                         <button className="px-3 py-1.5 bg-blue-600 text-white text-xs rounded-lg">Cast Your Vote</button>
                                     </div>
                                 </div>

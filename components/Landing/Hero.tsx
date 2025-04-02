@@ -17,7 +17,7 @@ const Hero = () => {
                             Webtoons <span className="text-transparent bg-clip-text font-bold bg-gradient-to-r from-blue-500 to-cyan-400">Where AI Meets Crypto</span>
                         </h1>
                         <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-lg">
-                            Experience webtoons reimagined on Base L2 where AI suggests multiple storylines and you vote with Zora's Coins to determine what happens next
+                            Experience webtoons reimagined on Base where AI suggests multiple storylines and you vote with Zora's Coins to determine what happens next
                         </p>
                         <div className="mt-8 space-y-4 md:space-y-0 md:flex md:space-x-4">
                             <Link href="/create" className="block w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-center  shadow-lg shadow-indigo-500/30 transition duration-150">
@@ -63,14 +63,14 @@ const Hero = () => {
                                     <div className="relative h-80 md:h-[calc(36rem-6rem)]">
                                         <img
                                             className="w-full h-full object-cover"
-                                            src="/api/placeholder/800/1000"
+                                            src="./images/mock/poster-1.jpg"
                                             alt="Webtoon preview"
                                         />
-                                        <div className="absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-blue-900 to-transparent"></div>
+                                        <div className="absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-gray-900 to-transparent"></div>
                                         <div className="absolute bottom-0 inset-x-0 p-6">
                                             <div className="flex justify-between items-end">
                                                 <div>
-                                                    <p className="text-indigo-200 text-sm font-medium">Webtoon in Active</p>
+                                                    {/* <p className="text-indigo-200 text-sm font-medium">Featured Webtoon</p> */}
                                                     <h3 className="text-white text-xl font-bold">Parallel Dimensions</h3>
                                                     <div className="mt-2 flex items-center">
                                                         <div className="h-6 w-6 rounded-full bg-blue-600"></div>
@@ -78,10 +78,8 @@ const Hero = () => {
                                                     </div>
                                                 </div>
                                                 <div className="bg-blue-600 rounded-lg px-4 py-2 flex items-center space-x-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                                        <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-                                                    </svg>
-                                                    <span className="text-white text-sm font-medium">Mint NFT</span>
+                                                 
+                                                    <span className="text-white text-sm font-medium">Collect Coin</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,7 +104,7 @@ const Hero = () => {
                                                 </div>
                                             </div>
                                             <div className="text-gray-600 text-sm">
-                                                <span className="text-blue-600 font-medium">42 ETH</span> / Fork price
+                                                <span className="text-blue-600 font-medium">42 ETH</span> / Current price
                                             </div>
                                         </div>
                                     </div>

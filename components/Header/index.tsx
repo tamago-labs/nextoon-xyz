@@ -5,9 +5,11 @@ import { Menu, X, Search, Bell, User, Globe, ChevronDown } from "react-feather"
 import Link from "next/link"
 import { useRouter, usePathname } from 'next/navigation'
 import ConnectButton from "./ConnectButton"
-
+import BaseModal from "@/modals/Base";
 
 const Header = () => {
+
+  const [modal, setModal] = useState<boolean>(true)
 
   const pathname = usePathname()
 
@@ -32,6 +34,22 @@ const Header = () => {
 
   return (
     <header className="bg-white bg-opacity-80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+
+      <BaseModal
+        visible={modal}
+        close={() => setModal(false)}
+        title="Development Version in Use"
+        maxWidth="max-w-xl"
+      >
+        <div>
+          You're accessing a development version of the NexToon platform. Some features may not work as expected. Stay tuned!
+        </div>
+        <button onClick={() => setModal(false)} className="w-full my-4 mb-0 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors">
+          Close
+        </button>
+      </BaseModal>
+
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Left section: Logo and navigation */}
@@ -53,10 +71,11 @@ const Header = () => {
 
             <div className="hidden lg:ml-8 lg:flex lg:space-x-8">
               {/* <Link href="/" className={` ${pathname === "/" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"}  px-3 py-5 text-sm font-medium`}>Home</Link> */}
-              <Link href="/originals" className={`${pathname === "/originals" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Originals</Link>
-              <Link href="/voting" className={`${pathname === "/voting" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Voting</Link>
+              <Link href="/explore" className={`${pathname === "/explore" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Explore</Link>
               <Link href="/create" className={`${pathname === "/create" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Create</Link>
-              <Link href="/profile" className={`${pathname === "/profile" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Profile</Link>
+              <Link href="/trade" className={`${pathname === "/trade" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Trade</Link>
+              <Link href="/vote" className={`${pathname === "/vote" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Vote</Link>
+              {/* <Link href="/profile" className={`${pathname === "/profile" ? "border-blue-500 border-b-2 text-blue-600" : "border-transparent text-gray-700 hover:border-blue-300 hover:text-blue-500"} px-3 py-5 border-b-2 text-sm font-medium`}>Profile</Link> */}
             </div>
           </div>
 
@@ -91,10 +110,11 @@ const Header = () => {
           <div className="lg:hidden absolute bg-white rounded-b-lg" id="mobile-menu">
             <div className="pt-2 pb-3 space-y-1">
               {/* <Link href="/" className={` ${pathname === "/" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "}  block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Home</Link> */}
-              <Link href="/originals" className={`${pathname === "/originals" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Originals</Link>
-              <Link href="/voting" className={`${pathname === "/voting" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Voting</Link>
+              <Link href="/explore" className={`${pathname === "/explore" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Explore</Link>
               <Link href="/create" className={`${pathname === "/create" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Create</Link>
-              <Link href="/profile" className={`${pathname === "/profile" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Profile</Link>
+              <Link href="/trade" className={`${pathname === "/trade" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Trade</Link>
+              <Link href="/vote" className={`${pathname === "/vote" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Vote</Link>
+              {/* <Link href="/profile" className={`${pathname === "/profile" ? "bg-blue-50 text-blue-600" : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 "} block pl-3 pr-4 py-2 rounded-md text-base font-medium`}>Profile</Link> */}
             </div>
 
             {/* Mobile Search */}

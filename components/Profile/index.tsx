@@ -1,6 +1,9 @@
-
+"use client"
 
 const ProfileContainer = () => {
+
+    
+
     return (
         <div>
             ProfileContainer

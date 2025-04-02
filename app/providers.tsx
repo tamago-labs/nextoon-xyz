@@ -16,46 +16,27 @@ import Link from "next/link"
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 
-import { Web3OnboardProvider, init } from '@web3-onboard/react'
-import injectedModule from '@web3-onboard/injected-wallets'
+import outputs from "@/amplify_outputs.json";
 
-// const INFURA_KEY = ''
+import WalletProvider from "../contexts/wallet"
+import AccountProvider from "../contexts/account"
 
-const baseSepoliaTestnet = {
-    id: 84532,
-    token: 'ETH',
-    label: 'Sepolia',
-    rpcUrl: 'https://sepolia.base.org'
-}
-
-const chains = [baseSepoliaTestnet]
-const wallets = [injectedModule()]
-
-const web3Onboard = init({
-    wallets,
-    chains,
-    appMetadata: {
-        name: 'Web3-Onboard Demo',
-        icon: '<svg>App Icon</svg>',
-        description: 'A demo of Web3-Onboard.'
-    }
-})
-
-// import outputs from "@/amplify_outputs.json";
-
-// Amplify.configure(outputs);
+Amplify.configure(outputs);
 
 export function Providers({ children }: any) {
 
+    const [web3Onboard, setWeb3Onboard] = useState<any>(null)
     const [showLoader, setShowLoader] = useState(true);
-
-    const pathname = usePathname()
 
     useEffect(() => {
         AOS.init({
             once: true,
         });
     }, []);
+
+    // useEffect(() => {
+    //     !showLoader && setWeb3Onboard(initWeb3Onboard)
+    // }, [showLoader])
 
     useEffect(() => {
 
@@ -68,18 +49,17 @@ export function Providers({ children }: any) {
 
     });
 
-
-
     return (
         <>
             {showLoader ?
                 <Loading />
                 :
-                <Web3OnboardProvider web3Onboard={web3Onboard}>
-                    {children}
-                </Web3OnboardProvider>
+                <WalletProvider>
+                    <AccountProvider>
+                         {children}
+                    </AccountProvider> 
+                </WalletProvider>
             }
-
         </>
     );
 }

@@ -16,6 +16,7 @@
     "@web3-onboard/core": "^2.24.0",
     "@web3-onboard/injected-wallets": "^2.11.3",
     "@web3-onboard/react": "^2.11.0",
+    "@web3-onboard/wagmi": "^2.0.1",
     "aos": "^2.3.4",
     "aws-amplify": "^6.6.6",
     "ethers": "^6.13.5",

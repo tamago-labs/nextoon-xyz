@@ -8,11 +8,11 @@ const Faq = () => {
                 <div className="space-y-6">
                     {[
                         {
-                            question: "How does the NFT voting system work?",
+                            question: "How does the voting system work?",
                             answer: "TBD"
                         },
                         {
-                            question: "How is revenue shared among NFT holders?",
+                            question: "How is revenue shared among token holders?",
                             answer: "TBD"
                         },
                         {

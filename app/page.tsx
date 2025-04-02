@@ -9,21 +9,25 @@ import Faq from "@/components/Landing/Faq"
 import { useState, useEffect } from "react";
 import { ChevronRight, Globe, Speaker, ArrowRight, BookOpen, Clock, TrendingUp } from "react-feather"
 import HowItWorks from "@/components/Landing/HowItWorks";
+import BaseModal from "@/modals/Base";
 
 export default function App() {
 
-
+  
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+
+
+      
 
       <Hero />
       <Contents />
       {/* <Feature />  */}
-      <HowItWorks/>
-      <Subscribe />
-      <Faq/>
+      <HowItWorks />
+      {/* <Subscribe /> */}
+      <Faq />
 
-      
+
 
     </main>
   );

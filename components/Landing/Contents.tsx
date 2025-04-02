@@ -13,9 +13,9 @@ const Contents = () => {
     useEffect(() => {
         // Mock data - would come from API in production
         setFeaturedWebtoons([
-            { id: 1, title: 'Neon Dreams', author: 'Luna Kim', genre: 'Sci-Fi', imageUrl: '/api/placeholder/600/400', rating: 4.8, language: 'EN, JP, KR' },
-            { id: 2, title: 'Phantom Shadows', author: 'Alex Chen', genre: 'Horror', imageUrl: '/api/placeholder/600/400', rating: 4.7, language: 'EN, KR, ES' },
-            { id: 3, title: 'Electric Hearts', author: 'Mia Johnson', genre: 'Romance', imageUrl: '/api/placeholder/600/400', rating: 4.9, language: 'EN, FR, KR' }
+            { id: 1, title: 'Neon Dreams', author: 'Luna Kim', genre: 'Sci-Fi', imageUrl: './images/mock/poster-2.jpg', rating: 4.8, language: 'EN, JP, KR' },
+            { id: 2, title: 'Phantom Shadows', author: 'Alex Chen', genre: 'Horror', imageUrl: './images/mock/poster-3.jpg', rating: 4.7, language: 'EN, KR, ES' },
+            { id: 3, title: 'Electric Hearts', author: 'Mia Johnson', genre: 'Romance', imageUrl: './images/mock/poster-4.jpg', rating: 4.9, language: 'EN, FR, KR' }
         ]);
 
         setPopularWebtoons([
@@ -70,9 +70,9 @@ const Contents = () => {
                                         <span className="text-yellow-500">★</span>
                                         <span className="text-sm font-medium text-gray-700 ml-1">{webtoon.rating}</span>
                                     </div>
-                                    <span className="text-xs text-blue-500 font-medium">
+                                    {/* <span className="text-xs text-blue-500 font-medium">
                                         Available in: {webtoon.language}
-                                    </span>
+                                    </span> */}
                                 </div>
                             </div>
                         </div>
