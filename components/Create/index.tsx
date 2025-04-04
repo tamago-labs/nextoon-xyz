@@ -17,8 +17,7 @@ import {
     Layout,
     Baseline
 } from 'lucide-react';
-
-
+import NewSeriesModal from "../../modals/NewSeries"
 import CreateContentTab from './CreateContent';
 import Dashboard from './Dashboard';
 import { WalletContext } from '@/contexts/wallet';
@@ -156,7 +155,7 @@ const CreateContainerOLD = () => {
 
 const CreateContainer = () => {
 
-    const [activeModal, setActiveModal] = useState(null);
+    const [activeModal, setActiveModal] = useState<any>(null);
 
     // Open a specific modal
     const openModal = (modalName: any) => {
@@ -170,20 +169,20 @@ const CreateContainer = () => {
 
     return (
         <div className="min-h-screen relative ">
+
+            {activeModal === "newSeries" &&(
+                <NewSeriesModal
+                    visible={activeModal === "newSeries"}
+                    close={closeModal}
+                />
+            )}
+
+
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Creator Studio</h1>
-                    <p className="text-gray-600 mt-2">Create and manage your webtoon series with community-driven storylines</p>
-                </div> */}
-                {/* Welcome Banner */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"> 
                 <div className="bg-gradient-to-r from-blue-600 to-blue-400 rounded-xl p-6 mb-8 text-white relative overflow-hidden">
                     <div className="absolute top-0 right-0 opacity-10">
-                        {/* <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M50,0 L100,50 L150,0 L200,50 L150,100 L200,150 L150,200 L100,150 L50,200 L0,150 L50,100 L0,50 Z" fill="white" />
-                        </svg> */}
                         <Baseline className="w-[200px] h-[200px]"/>
-
                     </div>
                     <h1 className="text-2xl font-bold mb-2">Welcome to Creator Studio</h1>
                     <p className="text-blue-100 max-w-xl">Launch your webtoon series with built-in tokenomics. Create episodes, set branch points and let your community help shape the story.</p>
@@ -195,7 +194,7 @@ const CreateContainer = () => {
                     </button>
                 </div>
                 {/* Stats Section */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                     <div className="bg-white rounded-lg shadow-sm p-6">
                         <div className="flex items-center">
                             <div className="bg-blue-100 p-3 rounded-lg">
@@ -243,7 +242,7 @@ const CreateContainer = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Action Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

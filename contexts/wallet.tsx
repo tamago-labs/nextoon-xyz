@@ -84,7 +84,7 @@ const Provider = ({ children }: Props) => {
     useEffect(() => {
         console.log('wagmiConfig', wagmiConfig)
     }, [wagmiConfig])
- 
+
 
     const signMessage = useCallback(async () => {
         const { wagmiConnector }: any = wallet
@@ -103,22 +103,24 @@ const Provider = ({ children }: Props) => {
             chainAsNumber = chainId
         } else {
             throw new Error('Invalid chainId')
-        } 
+        }
         await switchChain(wagmiConfig, {
             chainId: chainAsNumber,
             connector: wagmiConnector
         })
     }, [wallet, wagmiConfig, web3Onboard])
- 
+
     const walletContext: any = useMemo(
         () => ({
             defaultChain: DEFAULT_CHAIN,
             signMessage,
-            switchWagmiChain
+            switchWagmiChain,
+            wallet
         }),
         [
             signMessage,
-            switchWagmiChain
+            switchWagmiChain,
+            wallet
         ]
     )
 
