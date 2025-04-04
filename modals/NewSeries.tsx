@@ -1,9 +1,14 @@
-import { useCallback, useReducer } from "react"
+import { useCallback, useContext, useReducer } from "react"
 import ConnectedModal from "./Connected"
 import { RefreshCw } from "react-feather"
+import { WalletContext } from "@/contexts/wallet"
+import { AccountContext } from "@/contexts/account"
 
 
 const NewSeriesModal = ({ visible, close }: any) => {
+
+    const { profile } = useContext(AccountContext)
+    const { createCoin } = useContext(WalletContext)
 
     const [values, dispatch] = useReducer(
         (curVal: any, newVal: any) => ({ ...curVal, ...newVal }),
@@ -21,10 +26,16 @@ const NewSeriesModal = ({ visible, close }: any) => {
 
     const onCreate = useCallback(async () => {
 
-        dispatch({
-            loading: true,
+        dispatch({ 
             errorMessage: undefined
         })
+
+        if (!profile) {
+            dispatch({
+                errorMessage: "Can't find your wallet entry. Please refresh and try again."
+            })
+            return;
+        }
 
         // Title: 4–16 characters
         if (!title || title.length < 4 || title.length > 16) {
@@ -59,9 +70,19 @@ const NewSeriesModal = ({ visible, close }: any) => {
             return;
         }
 
+        dispatch({ 
+            loading: true
+        })
+
         try {
 
-            
+            const txId = await createCoin({
+                userId: profile.id,
+                title,
+                description,
+                tokenName,
+                tokenSymbol
+            })
 
         } catch (e: any) {
             console.log(e)
@@ -75,8 +96,8 @@ const NewSeriesModal = ({ visible, close }: any) => {
             loading: false
         })
 
-    }, [title, description, tokenName, tokenSymbol])
-
+    }, [title, description, profile, tokenName, tokenSymbol, createCoin])
+ 
 
     return (
         <ConnectedModal

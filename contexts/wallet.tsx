@@ -16,10 +16,18 @@ import {
     switchChain,
     disconnect,
     getConnectors,
-    signMessage as wagmiSignMessage
+    signMessage as wagmiSignMessage,
+    writeContract,
+    simulateContract,
+    waitForTransactionReceipt
 } from '@web3-onboard/wagmi'
 import { ethers } from 'ethers'
-import { parseEther, isHex, fromHex } from 'viem'
+import { parseEther, Address, isHex, fromHex } from 'viem'
+import { createCoinCall } from "@zoralabs/coins-sdk";
+import { generateClient } from "aws-amplify/data";
+import type { Schema } from "../amplify/data/resource"
+
+const client = generateClient<Schema>();
 
 export const WalletContext = createContext<any>({})
 
@@ -110,17 +118,64 @@ const Provider = ({ children }: Props) => {
         })
     }, [wallet, wagmiConfig, web3Onboard])
 
+    const createCoin = useCallback(async ({ userId, title, description, tokenName, tokenSymbol }: any) => {
+
+        // const { wagmiConnector }: any = wallet
+
+        const activeAddress = wallet?.accounts[0]?.address
+
+        const coinParams = {
+            name: tokenName || "My Awesome Token",
+            symbol: tokenSymbol || "TOKEN",
+            uri: "https://nextoon.xyz",
+            payoutRecipient: activeAddress as Address
+        };
+
+        const contractCallParams: any = createCoinCall(coinParams);
+        const writeConfig = await simulateContract(wagmiConfig, contractCallParams)
+
+        console.log("write config ", writeConfig, writeConfig.request)
+
+        const hash = await writeContract(wagmiConfig, writeConfig.request);
+
+        console.log("hash : ", hash)
+
+        const receipt = await waitForTransactionReceipt(wagmiConfig, {
+            hash
+        })
+
+        console.log("receipt : ", receipt)
+
+        const entry = await client.models.Content.create({
+            userId,
+            title,
+            description,
+            tokenName,
+            tokenSymbol,
+            isTestnet: true
+        })
+
+        console.log("entry : ", entry)
+
+        return {
+            ...receipt,
+            txId: hash
+        }
+    }, [wallet, wagmiConfig, web3Onboard])
+
     const walletContext: any = useMemo(
         () => ({
             defaultChain: DEFAULT_CHAIN,
             signMessage,
             switchWagmiChain,
-            wallet
+            wallet,
+            createCoin
         }),
         [
             signMessage,
             switchWagmiChain,
-            wallet
+            wallet,
+            createCoin
         ]
     )
 

@@ -25,8 +25,7 @@ const schema = a.schema({
       tokenContract: a.string()
     })
     .authorization((allow) => [
-      allow.publicApiKey().to(["read"]),
-      allow.owner()
+      allow.publicApiKey()
     ]),
 });
 
