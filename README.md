@@ -1,6 +1,9 @@
-## AWS Amplify Next.js (App Router) Starter Template
+## NexToon
 
-This repository provides a starter template for creating applications using Next.js (App Router) and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.
+
+
+![nextoon-wave-1](https://github.com/user-attachments/assets/fe711bd4-26e6-41eb-a303-b22e4f1bd4e5)
+
 
 ## Overview
 
