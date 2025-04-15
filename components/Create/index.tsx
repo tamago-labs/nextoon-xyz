@@ -15,143 +15,15 @@ import {
     Edit3,
     Image,
     Layout,
-    Baseline
+    Baseline,
+    UserPen
 } from 'lucide-react';
 import NewSeriesModal from "../../modals/NewSeries"
+import CreatorProfileModal from "../../modals/Creator"
 import CreateContentTab from './CreateContent';
 import Dashboard from './Dashboard';
-import { WalletContext } from '@/contexts/wallet';
-//  useWagmi from '@/hooks/useWagmi';
-
-const CreateContainerOLD = () => {
-
-    const { signMessage } = useContext(WalletContext)
-
-    // const { switchWagmiChain, signMessage} = useWagmi()
-
-    const [activeTab, setActiveTab] = useState('create');
-
-    // Tab configuration
-    const tabs = [
-        // { id: 'dashboard', name: 'Dashboard', icon: PlusCircle, description: 'Upload new episodes and create series' },
-        { id: 'create', name: 'Create Content', icon: PlusCircle, description: 'Upload new episodes and create series' },
-        { id: 'manage', name: 'Manage Content', icon: Layout, description: 'View and edit your published content' },
-        { id: 'settings', name: 'Creator Settings', icon: Settings, description: 'Manage your creator account settings' }
-    ];
-
-    const onTest = useCallback(async () => {
-        await signMessage()
-    }, [signMessage])
-
-    return (
-        <div className="min-h-screen relative bg-gradient-to-br from-blue-50 via-blue-100 to-sky-200">
-
-
-            {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Page Title */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Creator Studio</h1>
-                    <p className="text-gray-600 mt-2">Create and manage your webtoon series with community-driven storylines</p>
-
-                    {/* <button onClick={onTest} className='bg-blue-600 text-white p-2 rounded'>
-                        Test
-                    </button> */}
-
-                </div>
-
-                {/* Tab Navigation */}
-                <div className="mb-8">
-                    <div className="border-b border-gray-200">
-                        <nav className="flex -mb-px space-x-8">
-                            {tabs.map((tab) => (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    className={`
-                    whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
-                    ${activeTab === tab.id
-                                            ? 'border-blue-500 text-blue-600'
-                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        }
-                  `}
-                                >
-                                    <div className="flex items-center">
-                                        <tab.icon size={18} className="mr-2" />
-                                        {tab.name}
-                                    </div>
-                                </button>
-                            ))}
-                        </nav>
-                    </div>
-                </div>
-
-                {/* Tab Description */}
-                {/* <div className="bg-white rounded-lg shadow-sm p-4 mb-8">
-                    <div className="flex items-start">
-                        <div className="flex-shrink-0 bg-blue-100 rounded-full p-2">
-                            {tabs.find(tab => tab.id === activeTab)?.icon && (
-                                <tabs.find(tab => tab.id === activeTab).icon size={24} className="text-blue-600" />
-              )}
-                        </div>
-                        <div className="ml-4">
-                            <h2 className="text-lg font-medium text-gray-900">
-                                {tabs.find(tab => tab.id === activeTab)?.name}
-                            </h2>
-                            <p className="text-gray-600">
-                                {tabs.find(tab => tab.id === activeTab)?.description}
-                            </p>
-                        </div>
-                    </div>
-                </div> */}
-
-                {/* Tab Content Container */}
-                <div className="bg-white rounded-lg shadow-md p-6 min-h-[500px]">
-
-                    {activeTab === 'create' && (
-                        <CreateContentTab />
-                    )}
-
-
-                    {/* {!user && (
-                        <div className="text-center py-20 text-gray-500">
-                            <WifiOff size={48} className="mx-auto text-blue-500 mb-4" />
-                            <h3 className="text-xl font-medium text-gray-900 mb-2">
-                                Not Signed In
-                            </h3>
-                            <p>Please sign in to continue.</p>
-                        </div>
-                    )} */}
-
-                    {/* {activeTab === 'dashboard' && (
-                        <Dashboard />
-                    )}
-
-                    {user && activeTab === 'create' && (
-                        <CreateContentTab />
-                    )}
-
-                    {user && activeTab === 'manage' && (
-                        <div className="text-center py-20 text-gray-500">
-                            <Layout size={48} className="mx-auto text-blue-500 mb-4" />
-                            <h3 className="text-xl font-medium text-gray-900 mb-2">Manage Content Tab</h3>
-                            <p>This area will show your published content and editing tools.</p>
-                        </div>
-                    )}
-
-                    {user && activeTab === 'settings' && (
-                        <div className="text-center py-20 text-gray-500">
-                            <Settings size={48} className="mx-auto text-blue-500 mb-4" />
-                            <h3 className="text-xl font-medium text-gray-900 mb-2">Creator Settings Tab</h3>
-                            <p>This area will contain account settings and preferences.</p>
-                        </div>
-                    )} */}
-                </div>
-            </div>
-
-        </div>
-    )
-}
+import { WalletContext } from '@/contexts/wallet'; 
+ 
 
 const CreateContainer = () => {
 
@@ -173,6 +45,12 @@ const CreateContainer = () => {
             {activeModal === "newSeries" &&(
                 <NewSeriesModal
                     visible={activeModal === "newSeries"}
+                    close={closeModal}
+                />
+            )}
+            {activeModal === "profile" &&(
+                <CreatorProfileModal
+                    visible={activeModal === "profile"}
                     close={closeModal}
                 />
             )}
@@ -276,6 +154,21 @@ const CreateContainer = () => {
                         </div>
                     </div>
 
+                    <div
+                        onClick={() => openModal('profile')}
+                        className="bg-white rounded-lg shadow-sm p-6 border border-gray-200 hover:border-blue-300 cursor-pointer transition-colors"
+                    >
+                        <div className="flex items-start">
+                            <div className="bg-amber-100 p-3 rounded-lg">
+                                <UserPen className="h-6 w-6 text-amber-600" />
+                            </div>
+                            <div className="ml-4">
+                                <h3 className="text-lg font-medium text-gray-900">Creator Settings</h3>
+                                <p className="text-gray-600 mt-1">Manage your creator account settings</p>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* <div
                         onClick={() => openModal('branchPoint')}
                         className="bg-white rounded-lg shadow-sm p-6 border border-gray-200 hover:border-blue-300 cursor-pointer transition-colors"
@@ -290,22 +183,23 @@ const CreateContainer = () => {
                             </div>
                         </div>
                     </div> */}
+                    
                 </div>
 
                 {/* Series Overview */}
                 <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-lg font-medium text-gray-900">Your Series</h2>
-                        <button
+                        {/* <button
                             onClick={() => openModal('allSeries')}
                             className="text-blue-600 text-sm font-medium hover:text-blue-800"
                         >
                             View All
-                        </button>
+                        </button> */}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[
+                        {/* {[
                             {
                                 title: "Dragon's Prophecy",
                                 episodes: 8,
@@ -351,12 +245,12 @@ const CreateContainer = () => {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        ))} */}
                     </div>
                 </div>
 
                 {/* Recent Activity */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
+                {/* <div className="bg-white rounded-lg shadow-sm p-6">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-lg font-medium text-gray-900">Recent Activity</h2>
                         <button className="text-blue-600 text-sm font-medium hover:text-blue-800">View All</button>
@@ -411,7 +305,7 @@ const CreateContainer = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
 
 

@@ -170,31 +170,31 @@ const NewSeriesModal = ({ visible, close }: any) => {
 
                 <div className="p-4 bg-blue-50 rounded-lg mb-6">
                     <h3 className="text-sm font-medium text-blue-800 mb-2">Token Generation & Distribution</h3>
-                    <p className="text-xs text-blue-600 mb-4"> 
+                    <p className="text-xs text-blue-600 mb-4">
                         When you create a series, NexToon automatically mints ERC-20 tokens using Zora's Coins Protocol. You'll receive 1% of the total supply, with the remaining entering circulation.
                     </p>
                     <div className="overflow-x-auto">
-    <table className="w-full text-xs text-left text-blue-700 border border-blue-200"> 
-      <tbody>
-        <tr className="bg-blue-50">
-          <td className="px-3 py-2 border-b border-blue-100">Total Supply</td>
-          <td className="px-3 py-2 border-b border-blue-100">1,000,000,000 tokens</td>
-        </tr>
-        <tr className="bg-blue-50">
-          <td className="px-3 py-2 border-b border-blue-100">Creator Allocation</td>
-          <td className="px-3 py-2 border-b border-blue-100">10,000,000 tokens (1%)</td>
-        </tr>
-        {/* <tr className="bg-white">
+                        <table className="w-full text-xs text-left text-blue-700 border border-blue-200">
+                            <tbody>
+                                <tr className="bg-blue-50">
+                                    <td className="px-3 py-2 border-b border-blue-100">Total Supply</td>
+                                    <td className="px-3 py-2 border-b border-blue-100">1,000,000,000 tokens</td>
+                                </tr>
+                                <tr className="bg-blue-50">
+                                    <td className="px-3 py-2 border-b border-blue-100">Creator Allocation</td>
+                                    <td className="px-3 py-2 border-b border-blue-100">10,000,000 tokens (1%)</td>
+                                </tr>
+                                {/* <tr className="bg-white">
           <td className="px-3 py-2 border-b border-blue-100">Liquidity Pool</td>
           <td className="px-3 py-2 border-b border-blue-100">990,000,000 tokens (Uniswap V3)</td>
         </tr> */}
-        <tr className="bg-blue-50">
-          <td className="px-3 py-2">Exchange Listing</td>
-          <td className="px-3 py-2">Uniswap V3 on Base Testnet</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+                                <tr className="bg-blue-50">
+                                    <td className="px-3 py-2">Exchange Listing</td>
+                                    <td className="px-3 py-2">Uniswap V3 on Base Testnet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
 

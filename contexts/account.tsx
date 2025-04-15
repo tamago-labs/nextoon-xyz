@@ -52,11 +52,29 @@ const Provider = ({ children }: Props) => {
 
     }, [])
 
+    const updateProfile = useCallback(async ({ id, displayName }: any) => {
+
+        await client.models.User.update({
+            id,
+            displayName
+        })
+
+        const entry = await client.models.User.get({
+            id
+        })
+
+        dispatch({
+            profile: entry.data
+        })
+
+    },[])
+
 
     const accountContext: any = useMemo(
         () => ({
             loadProfile,
-            profile
+            profile,
+            updateProfile
         }),
         [
             profile
