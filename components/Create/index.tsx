@@ -276,7 +276,7 @@ const CreateContainer = () => {
                         </div>
                     </div>
 
-                    <div
+                    {/* <div
                         onClick={() => openModal('branchPoint')}
                         className="bg-white rounded-lg shadow-sm p-6 border border-gray-200 hover:border-blue-300 cursor-pointer transition-colors"
                     >
@@ -289,7 +289,7 @@ const CreateContainer = () => {
                                 <p className="text-gray-600 mt-1">Set up AI-suggested story options for voting</p>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Series Overview */}

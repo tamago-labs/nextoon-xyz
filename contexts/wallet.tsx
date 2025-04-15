@@ -23,7 +23,7 @@ import {
 } from '@web3-onboard/wagmi'
 import { ethers } from 'ethers'
 import { parseEther, Address, isHex, fromHex } from 'viem'
-import { createCoinCall } from "@zoralabs/coins-sdk";
+import { createCoinCall, getCoinCreateFromLogs } from "@zoralabs/coins-sdk";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../amplify/data/resource"
 
@@ -118,11 +118,11 @@ const Provider = ({ children }: Props) => {
         })
     }, [wallet, wagmiConfig, web3Onboard])
 
-    const createCoin = useCallback(async ({ userId, title, description, tokenName, tokenSymbol }: any) => {
-
-        // const { wagmiConnector }: any = wallet
+    const createCoin = useCallback(async ({ userId, genre, description, tokenName, tokenSymbol }: any) => {
 
         const activeAddress = wallet?.accounts[0]?.address
+
+        console.log("active address", activeAddress, tokenName, tokenSymbol)
 
         const coinParams = {
             name: tokenName || "My Awesome Token",
@@ -146,13 +146,18 @@ const Provider = ({ children }: Props) => {
 
         console.log("receipt : ", receipt)
 
+        const coinDeployment = getCoinCreateFromLogs(receipt);
+        console.log("Deployed coin address:", coinDeployment?.coin);
+
         const entry = await client.models.Content.create({
             userId,
-            title,
+            title: tokenName,
             description,
             tokenName,
             tokenSymbol,
-            isTestnet: true
+            genre,
+            isTestnet: true,
+            tokenContract: coinDeployment?.coin
         })
 
         console.log("entry : ", entry)

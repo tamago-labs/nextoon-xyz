@@ -17,6 +17,7 @@ const schema = a.schema({
       userId: a.id().required(),
       user: a.belongsTo('User', "userId"),
       title: a.string(),
+      genre: a.string(),
       description: a.string(),
       coverImageUrl: a.string(),
       isTestnet: a.boolean(),
