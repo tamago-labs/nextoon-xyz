@@ -1,6 +1,7 @@
 import { createContext, useCallback, ReactNode, useContext, useEffect, useMemo, useReducer, useState } from "react"
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../amplify/data/resource"
+import { shortAddress } from "@/helpers";
 
 const client = generateClient<Schema>();
 
@@ -21,22 +22,22 @@ const Provider = ({ children }: Props) => {
 
     const { profile } = values
 
-    const loadProfile = useCallback(async (userId: string) => {
+    const loadProfile = useCallback(async (userAddress: string) => {
 
         let entry
 
         const user = await client.models.User.list({
             filter: {
                 username: {
-                    eq: userId
+                    eq: userAddress
                 }
             }
         })
 
         if (user.data.length === 0) {
             const newUser = {
-                username: userId,
-                displayName: userId
+                username: userAddress,
+                displayName: userAddress
             }
             await client.models.User.create({
                 ...newUser
@@ -49,6 +50,20 @@ const Provider = ({ children }: Props) => {
         dispatch({
             profile: entry
         })
+
+    }, [])
+
+    const getCreatorDisplayName = useCallback(async (userId: string) => {
+ 
+        const { data } = await client.models.User.get({
+            id: userId
+        })
+ 
+        if (data) {
+            return data.displayName || shortAddress(data.username)
+        } else {
+            return undefined
+        }
 
     }, [])
 
@@ -67,13 +82,14 @@ const Provider = ({ children }: Props) => {
             profile: entry.data
         })
 
-    },[])
+    }, [])
 
 
     const accountContext: any = useMemo(
         () => ({
             loadProfile,
             profile,
+            getCreatorDisplayName,
             updateProfile
         }),
         [

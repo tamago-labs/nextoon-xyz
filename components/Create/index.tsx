@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext, useReducer } from 'react';
 import { WifiOff } from 'react-feather';
 import {
     PlusCircle,
@@ -18,16 +18,29 @@ import {
     Baseline,
     UserPen
 } from 'lucide-react';
+import { ExternalLink } from 'react-feather';
 import NewSeriesModal from "../../modals/NewSeries"
 import CreatorProfileModal from "../../modals/Creator"
 import CreateContentTab from './CreateContent';
 import Dashboard from './Dashboard';
-import { WalletContext } from '@/contexts/wallet'; 
- 
+import Link from 'next/link';
+import { WalletContext } from '@/contexts/wallet';
+import { ContentContext } from '@/contexts/content';
 
 const CreateContainer = () => {
 
+    const { series } = useContext(ContentContext)
+
     const [activeModal, setActiveModal] = useState<any>(null);
+
+    const [values, dispatch] = useReducer(
+        (curVal: any, newVal: any) => ({ ...curVal, ...newVal }),
+        {
+
+        }
+    )
+
+    const { } = values
 
     // Open a specific modal
     const openModal = (modalName: any) => {
@@ -42,13 +55,13 @@ const CreateContainer = () => {
     return (
         <div className="min-h-screen relative ">
 
-            {activeModal === "newSeries" &&(
+            {activeModal === "newSeries" && (
                 <NewSeriesModal
                     visible={activeModal === "newSeries"}
                     close={closeModal}
                 />
             )}
-            {activeModal === "profile" &&(
+            {activeModal === "profile" && (
                 <CreatorProfileModal
                     visible={activeModal === "profile"}
                     close={closeModal}
@@ -57,20 +70,27 @@ const CreateContainer = () => {
 
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"> 
-                <div className="bg-gradient-to-r from-blue-600 to-blue-400 rounded-xl p-6 mb-8 text-white relative overflow-hidden">
-                    <div className="absolute top-0 right-0 opacity-10">
-                        <Baseline className="w-[200px] h-[200px]"/>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+
+                <div className="bg-white rounded-xl p-6 mb-8 shadow-sm border border-gray-200 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 opacity-5">
+                        <Baseline className="w-[200px] h-[200px]" />
                     </div>
-                    <h1 className="text-2xl font-bold mb-2">Welcome to Creator Studio</h1>
-                    <p className="text-blue-100 max-w-xl">Launch your webtoon series with built-in tokenomics. Create episodes, set branch points and let your community help shape the story.</p>
-                    <button
-                        onClick={() => openModal('quickStart')}
-                        className="mt-4 bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center"
-                    >
-                        Quick Start Guide
-                    </button>
+                    <div className="flex md:items-center flex-col md:flex-row">
+                        <div className="md:flex-1">
+                            <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome to Creator Studio</h1>
+                            <p className="text-gray-600 max-w-xl mb-4">Launch your webtoon series with built-in tokenomics. Create episodes, set branch points and let your community help shape the story.</p>
+                            <button
+                                onClick={() => openModal('quickStart')}
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center transition-colors"
+                            >
+                                Quick Start Guide
+                            </button>
+                        </div>
+                    </div>
                 </div>
+
                 {/* Stats Section */}
                 {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                     <div className="bg-white rounded-lg shadow-sm p-6">
@@ -183,7 +203,7 @@ const CreateContainer = () => {
                             </div>
                         </div>
                     </div> */}
-                    
+
                 </div>
 
                 {/* Series Overview */}
@@ -198,55 +218,117 @@ const CreateContainer = () => {
                         </button> */}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {/* {[
-                            {
-                                title: "Dragon's Prophecy",
-                                episodes: 8,
-                                readers: 642,
-                                tokens: 5000,
-                                image: "bg-gradient-to-br from-blue-500 to-purple-600"
-                            },
-                            {
-                                title: "Cyber Detective",
-                                episodes: 12,
-                                readers: 483,
-                                tokens: 3200,
-                                image: "bg-gradient-to-br from-green-400 to-blue-500"
-                            },
-                            {
-                                title: "Lost Kingdoms",
-                                episodes: 4,
-                                readers: 123,
-                                tokens: 1000,
-                                image: "bg-gradient-to-br from-yellow-400 to-red-500"
-                            }
-                        ].map((series, index) => (
-                            <div
-                                key={index}
-                                onClick={() => openModal('seriesDetail')}
-                                className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
-                            >
-                                <div className={`h-32 ${series.image} flex items-center justify-center`}>
-                                    <h3 className="text-lg font-bold text-white px-4 text-center">{series.title}</h3>
-                                </div>
-                                <div className="p-4">
-                                    <div className="flex justify-between text-sm mb-2">
-                                        <span className="text-gray-500">Episodes</span>
-                                        <span className="font-medium text-gray-800">{series.episodes}</span>
-                                    </div>
-                                    <div className="flex justify-between text-sm mb-2">
-                                        <span className="text-gray-500">Readers</span>
-                                        <span className="font-medium text-gray-800">{series.readers}</span>
-                                    </div>
-                                    <div className="flex justify-between text-sm">
-                                        <span className="text-gray-500">Tokens</span>
-                                        <span className="font-medium text-gray-800">{series.tokens}</span>
-                                    </div>
-                                </div>
+                    {series.length === 0 && (
+                        <div className='flex text-gray-600 justify-between items-center h-[200px]'>
+                            <div className='mx-auto'>
+                                No content found. Connect your wallet and create your first Webtoon series!
                             </div>
-                        ))} */}
-                    </div>
+
+                        </div>
+                    )}
+
+                    {series.length > 0 && (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {/* {[
+                                {
+                                    title: "Dragon's Prophecy",
+                                    episodes: 8,
+                                    readers: 642,
+                                    tokens: 5000,
+                                    image: "bg-gradient-to-br from-blue-500 to-purple-600"
+                                },
+                                {
+                                    title: "Cyber Detective",
+                                    episodes: 12,
+                                    readers: 483,
+                                    tokens: 3200,
+                                    image: "bg-gradient-to-br from-green-400 to-blue-500"
+                                },
+                                {
+                                    title: "Lost Kingdoms",
+                                    episodes: 4,
+                                    readers: 123,
+                                    tokens: 1000,
+                                    image: "bg-gradient-to-br from-yellow-400 to-red-500"
+                                }
+                            ].map((series, index) => (
+                                <div
+                                    key={index}
+                                    onClick={() => openModal('seriesDetail')}
+                                    className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                                >
+                                    <div className={`h-32 ${series.image} flex items-center justify-center`}>
+                                        <h3 className="text-lg font-bold text-white px-4 text-center">{series.title}</h3>
+                                    </div>
+                                    <div className="p-4">
+                                        <div className="flex justify-between text-sm mb-2">
+                                            <span className="text-gray-500">Episodes</span>
+                                            <span className="font-medium text-gray-800">{series.episodes}</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm mb-2">
+                                            <span className="text-gray-500">Readers</span>
+                                            <span className="font-medium text-gray-800">{series.readers}</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-gray-500">Tokens</span>
+                                            <span className="font-medium text-gray-800">{series.tokens}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))} */}
+                            {series.map((item: any, index: number) => {
+
+                                let gradientBg = ""
+
+                                if (index % 3 === 0) {
+                                    gradientBg = "bg-gradient-to-br from-blue-500 to-purple-600"
+                                } else if (index % 3 === 1) {
+                                    gradientBg = "bg-gradient-to-br from-green-400 to-blue-500"
+                                } else {
+                                    gradientBg = "bg-gradient-to-br from-yellow-400 to-red-500"
+                                }
+
+                                return (
+                                    <div
+                                        key={index}
+                                        className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                                    >
+                                        <div className={`h-32 ${gradientBg} flex items-center justify-center`}>
+                                            <h3 className="text-lg font-bold text-white px-4 text-center">{item.tokenName}</h3>
+                                        </div>
+                                        <div className="p-4">
+                                            <div className="flex justify-between text-sm mb-2">
+                                                <span className="text-gray-500">Episodes</span>
+                                                <span className="font-medium text-gray-800">0</span>
+                                            </div>
+                                            <div className="flex justify-between text-sm mb-2">
+                                                <span className="text-gray-500">Readers</span>
+                                                <span className="font-medium text-gray-800">11333</span>
+                                            </div>
+                                            <div className="flex justify-between text-sm">
+                                                <span className="text-gray-500">Token Price</span>
+                                                <span className="font-medium text-gray-800">0.42 ETH</span>
+                                            </div>
+
+                                        </div>
+                                        <div className="flex justify-center mt-4 mb-4 space-x-4">
+                                            <Link href={`https://sepolia.basescan.org/token/${item.tokenContract}`} target="_blank">
+                                                <button className="flex cursor-pointer hover:underline items-center text-sm text-blue-600 hover:text-blue-800">
+                                                    <ExternalLink className="h-4 w-4 mr-1" />
+                                                    View Token Contract
+                                                </button>
+                                            </Link> 
+                                        </div>
+
+                                    </div>
+                                )
+                            })
+
+                            }
+                        </div>
+                    )
+
+                    }
                 </div>
 
                 {/* Recent Activity */}

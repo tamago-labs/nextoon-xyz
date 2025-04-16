@@ -1,8 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer, useContext } from "react";
 import { ChevronRight, Globe, Speaker, ArrowRight, BookOpen, Clock, TrendingUp } from "react-feather"
 import Link from "next/link";
+import { ContentContext } from "@/contexts/content";
+import { shortAddress } from "@/helpers";
+import { AccountContext } from "@/contexts/account";
 
 const Contents = () => {
+
+    const { loadAllSeries } = useContext(ContentContext)
+
+    const [values, dispatch] = useReducer(
+        (curVal: any, newVal: any) => ({ ...curVal, ...newVal }),
+        {
+            series: []
+        }
+    )
+
+    const { series } = values
 
 
     const [featuredWebtoons, setFeaturedWebtoons] = useState<any>([]);
@@ -33,8 +47,17 @@ const Contents = () => {
         ]);
     }, []);
 
-    const categories = ['All', 'Romance', 'Action', 'Fantasy', 'Sci-Fi', 'Horror', 'Comedy', 'Drama', 'Thriller'];
+    useEffect(() => {
+        loadAllSeries().then(
+            (series: any) => {
+                dispatch({
+                    series
+                })
+            }
+        )
+    }, [])
 
+    const categories = ['All', 'Romance', 'Action', 'Fantasy', 'Sci-Fi', 'Horror', 'Comedy', 'Drama', 'Thriller'];
 
     return (
         <>
@@ -45,38 +68,72 @@ const Contents = () => {
                     <h2 className="text-3xl font-bold  my-auto bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent">
                         NexToon Originals
                     </h2>
-                    <Link href="/originals" className="text-blue-500 ml-auto my-auto  hover:text-blue-700 text-sm font-medium flex items-center">
+                    {/* <Link href="/originals" className="text-blue-500 ml-auto my-auto  hover:text-blue-700 text-sm font-medium flex items-center">
                         View All <ChevronRight size={16} />
-                    </Link>
+                    </Link> */}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {featuredWebtoons.map((webtoon: any) => (
-                        <div key={webtoon.id} className="bg-white rounded-2xl overflow-hidden shadow-md transition-all hover:shadow-xl hover:translate-y-[-5px] group">
-                            <div className="relative">
-                                <img src={webtoon.imageUrl} alt={webtoon.title} className="w-full h-56 object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-60 transition-opacity"></div>
-                                <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
-                                    <span className="font-bold">Start Reading</span>
-                                </div>
-                            </div>
-                            <div className="p-5">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-bold text-xl text-gray-900">{webtoon.title}</h3>
-                                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">{webtoon.genre}</span>
-                                </div>
-                                <p className="text-gray-600 mb-3">{webtoon.author}</p>
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
-                                        <span className="text-yellow-500">★</span>
-                                        <span className="text-sm font-medium text-gray-700 ml-1">{webtoon.rating}</span>
+
+                    {series.map((webtoon: any, index: number) => {
+
+                        let gradientBg = ""
+
+                        if (index % 3 === 0) {
+                            gradientBg = "bg-gradient-to-br from-blue-500 to-purple-600"
+                        } else if (index % 3 === 1) {
+                            gradientBg = "bg-gradient-to-br from-green-400 to-blue-500"
+                        } else {
+                            gradientBg = "bg-gradient-to-br from-yellow-400 to-red-500"
+                        }
+
+                        return (
+                            <div key={webtoon.id} className="bg-white rounded-2xl overflow-hidden shadow-md transition-all hover:shadow-xl hover:translate-y-[-5px] group">
+
+                                <div className="relative">
+                                    <div className={`h-56 ${gradientBg} flex items-center justify-center`}>
+                                        <h3 className="text-2xl font-bold text-white px-4 text-center">{webtoon.tokenName}</h3>
                                     </div>
-                                    {/* <span className="text-xs text-blue-500 font-medium">
-                                        Available in: {webtoon.language}
-                                    </span> */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-60 transition-opacity"></div>
+                                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+                                        <span className="font-bold">Start Reading</span>
+                                    </div>
+                                </div>
+                                <div className="p-5">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <h3 className="font-bold text-xl text-gray-900">{webtoon.tokenName}</h3>
+                                        <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 capitalize rounded-full">{webtoon.genre}</span>
+                                    </div>
+                                    <p className="text-gray-600 mb-3">
+                                        By <DisplayCreatorName userId={webtoon.userId} />
+                                    </p>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex space-x-4 ">
+                                            <div className="flex items-center space-x-1">
+                                                <svg className="w-4 h-4 text-pink-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"></path>
+                                                </svg>
+                                                <span className="text-gray-600 text-sm">1.5K</span>
+                                            </div>
+                                            <div className="flex items-center space-x-1">
+                                                <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path>
+                                                    <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path>
+                                                </svg>
+                                                <span className="text-gray-600 text-sm">284</span>
+                                            </div>
+                                        </div>
+                                        <span className="text-sm text-blue-500 font-medium">
+                                            {/* Available in: {webtoon.language} */}
+                                            Current price{` `}<span className="text-blue-600 font-medium">42 ETH</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        )
+                    })}
+
+
+
                 </div>
             </section>
 
@@ -164,9 +221,26 @@ const Contents = () => {
                 </section>
             </div> */}
 
-
-
         </>
+    )
+}
+
+const DisplayCreatorName = ({ userId }: any) => {
+
+    const { getCreatorDisplayName } = useContext(AccountContext)
+
+    const [displayName, setDisplayName] = useState<any>()
+
+    useEffect(() => {
+        userId && getCreatorDisplayName(userId).then(setDisplayName)
+    }, [userId])
+
+    console.log(displayName)
+
+    return (
+        <span>
+            {!displayName ? shortAddress(userId) : displayName}
+        </span>
     )
 }
 

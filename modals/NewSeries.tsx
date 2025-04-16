@@ -148,7 +148,7 @@ const NewSeriesModal = ({ visible, close }: any) => {
                             <option value="action">Action</option>
                             <option value="romance">Romance</option>
                             <option value="fantasy">Fantasy</option>
-                            <option value="sci-Fi">Sci-Fi</option>
+                            <option value="sci-fi">Sci-Fi</option>
                             <option value="drama">Drama</option>
                             <option value="comedy">Comedy</option>
                             <option value="horror">Horror</option>

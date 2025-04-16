@@ -3,7 +3,9 @@
 const ExploreContainer = () => {
     return (
         <div>
-            ExploreContainer
+            <div className="container text-center py-24 ">
+                Only create and trade pages are available
+            </div>
         </div>
     )
 }

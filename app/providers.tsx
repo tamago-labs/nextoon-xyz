@@ -20,6 +20,7 @@ import outputs from "@/amplify_outputs.json";
 
 import WalletProvider from "../contexts/wallet"
 import AccountProvider from "../contexts/account"
+import ContentProvider from "../contexts/content"
 
 Amplify.configure(outputs);
 
@@ -38,28 +39,37 @@ export function Providers({ children }: any) {
     //     !showLoader && setWeb3Onboard(initWeb3Onboard)
     // }, [showLoader])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const screenLoader = document.getElementsByClassName('screen_loader');
-        if (screenLoader?.length) {
-            setTimeout(() => {
-                setShowLoader(false);
-            }, 200);
-        }
+    //     const screenLoader = document.getElementsByClassName('screen_loader');
+    //     if (screenLoader?.length) {
+    //         setTimeout(() => {
+    //             setShowLoader(false);
+    //         }, 200);
+    //     }
 
-    });
+    // });
 
     return (
         <>
-            {showLoader ?
+            {/* {showLoader ?
                 <Loading />
                 :
                 <WalletProvider>
                     <AccountProvider>
-                         {children}
-                    </AccountProvider> 
+                        <ContentProvider>
+                            {children}
+                        </ContentProvider>
+                    </AccountProvider>
                 </WalletProvider>
-            }
+            } */}
+            <WalletProvider>
+                    <AccountProvider>
+                        <ContentProvider>
+                            {children}
+                        </ContentProvider>
+                    </AccountProvider>
+                </WalletProvider>
         </>
     );
 }
