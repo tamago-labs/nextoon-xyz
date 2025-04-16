@@ -488,7 +488,7 @@ const TradeContainer = () => {
                     </div>
 
                     { mode === "buy" && <Buy ethBalance={ethBalance} handleInputChange={handleInputChange} inputAmount={inputAmount} />}
-                    { mode === "sell" && <Sell/>}
+                    { mode === "sell" && <Sell handleInputChange={handleInputChange} inputAmount={inputAmount} />}
                 </div>
 
                 {/* Action Buttons */}

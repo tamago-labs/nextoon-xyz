@@ -20,12 +20,13 @@ import {
     writeContract,
     simulateContract,
     waitForTransactionReceipt,
+    getPublicClient,
     getBalance
 } from '@web3-onboard/wagmi'
 import { ethers } from 'ethers'
-import { parseEther, Address, isHex, fromHex, createPublicClient, http } from 'viem'
+import { parseEther, formatEther, Address, isHex, fromHex, createPublicClient, http } from 'viem'
 import { baseSepolia } from "viem/chains"
-import { createCoinCall, getCoinCreateFromLogs, getOnchainCoinDetails, getCoin } from "@zoralabs/coins-sdk";
+import { createCoinCall, getCoinCreateFromLogs, getOnchainCoinDetails, getCoin, tradeCoinCall, getTradeFromLogs } from "@zoralabs/coins-sdk";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../amplify/data/resource"
 
@@ -47,10 +48,6 @@ const baseSepoliaTestnet = {
     rpcUrl: 'https://sepolia.base.org'
 }
 
-const publicClient = createPublicClient({
-    chain: baseSepolia,
-    transport: http("https://sepolia.base.org"),
-})
 
 const chains = [baseSepoliaTestnet]
 const wallets = [injectedModule()]
@@ -200,7 +197,53 @@ const Provider = ({ children }: Props) => {
 
     }, [])
 
-   
+    const getTokenBalance = useCallback(async (tokenAddress: any, userAddress: any) => {
+
+        const balance = await getBalance(wagmiConfig, {
+            address: userAddress,
+            token: tokenAddress,
+        })
+
+
+        return Number(`${formatEther(balance.value)}`)
+    }, [wagmiConfig])
+
+    const tradeCoin = useCallback(async ({ direction, tokenAddress, amount }: any) => {
+
+        const activeAddress = wallet?.accounts[0]?.address
+
+        const tradeParams = {
+            direction,
+            target: tokenAddress as Address,
+            args: {
+                recipient: activeAddress as Address,
+                orderSize: parseEther(`${amount}`)
+            }
+        }
+
+        // Create configuration for wagmi
+        const contractCallParams = tradeCoinCall(tradeParams);
+        const writeConfig = await simulateContract(wagmiConfig, contractCallParams)
+        const hash = await writeContract(wagmiConfig, writeConfig.request);
+
+        console.log("hash : ", hash)
+
+        const receipt = await waitForTransactionReceipt(wagmiConfig, {
+            hash
+        })
+
+        console.log("receipt : ", receipt)
+
+        const tradeEvent = getTradeFromLogs(receipt, direction);
+
+        if (tradeEvent) {
+            console.log(tradeEvent);
+            // tradeEvent.coinsPurchased <-- buy
+            // tradeEvent.amountPurchased <-- sell
+        }
+
+    }, [wallet, wagmiConfig, web3Onboard])
+
 
     const walletContext: any = useMemo(
         () => ({
@@ -209,13 +252,17 @@ const Provider = ({ children }: Props) => {
             switchWagmiChain,
             wallet,
             createCoin,
-            getCoinDetails
+            getCoinDetails,
+            tradeCoin,
+            getTokenBalance
         }),
         [
             signMessage,
             switchWagmiChain,
             wallet,
-            createCoin
+            createCoin,
+            tradeCoin,
+            getTokenBalance
         ]
     )
 

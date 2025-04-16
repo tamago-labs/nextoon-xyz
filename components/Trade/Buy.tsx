@@ -9,13 +9,26 @@ import {
     Bookmark,
     AlertCircle
 } from 'lucide-react';
-import { useContext, useState, useEffect } from 'react';
+import { useReducer, useContext, useState, useEffect, useCallback } from 'react';
 import { shortAddress } from "@/helpers";
 import { AccountContext } from "@/contexts/account";
 import { useConnectWallet } from '@web3-onboard/react'
+import { WalletContext } from '@/contexts/wallet';
 
 
 const Buy = ({ ethBalance, handleInputChange, inputAmount }: any) => {
+
+    const { tradeCoin } = useContext(WalletContext)
+
+    const [values, dispatch] = useReducer(
+        (curVal: any, newVal: any) => ({ ...curVal, ...newVal }),
+        {
+            errorMessage: undefined,
+            loading: false
+        }
+    )
+
+    const { loading, errorMessage } = values
 
     const [{ wallet }] = useConnectWallet()
 
@@ -28,6 +41,44 @@ const Buy = ({ ethBalance, handleInputChange, inputAmount }: any) => {
         setSelectedToken(token);
         setShowTokenList(false);
     };
+
+    const onBuy = useCallback(async () => {
+
+        dispatch({
+            errorMessage: undefined
+        })
+
+        if (!inputAmount || 0.01 > inputAmount) {
+            dispatch({
+                errorMessage: "Minimum amount is 0.01"
+            })
+            return;
+        }
+
+        dispatch({
+            loading: true
+        })
+
+        try {
+
+            await tradeCoin({
+                direction: "buy",
+                tokenAddress: selectedToken.tokenContract,
+                amount: inputAmount
+            })
+
+        } catch (e: any) {
+            console.log(e)
+            dispatch({
+                errorMessage: `${e.message}`
+            })
+        }
+
+        dispatch({
+            loading: false
+        })
+
+    }, [inputAmount, tradeCoin, selectedToken])
 
     return (
         <>
@@ -239,12 +290,21 @@ const Buy = ({ ethBalance, handleInputChange, inputAmount }: any) => {
                         Connect wallet
                     </button>
                 ) : (
-                    <button className="w-full cursor-pointer py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                    <button onClick={onBuy} className="w-full flex cursor-pointer py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
                         {/* Buy {outputAmount} {selectedToken.symbol} */}
-                        Buy
+
+                        {loading && <RefreshCw size={22} className="animate-spin mx-auto" />}
+                        {!loading && <div className="m-auto">Buy</div>}
                     </button>
                 )}
             </div>
+            {errorMessage && (
+                <div className="flex px-2 w-full mx-auto py-4 pb-2 ">
+                    <p className="text-sm mx-auto text-center font-semibold  text-blue-600">
+                        {errorMessage}
+                    </p>
+                </div>
+            )}
 
         </>
     )

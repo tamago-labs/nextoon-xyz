@@ -92,7 +92,6 @@ const NewSeriesModal = ({ visible, close }: any) => {
             })
         }
 
-
         dispatch({
             loading: false
         })
