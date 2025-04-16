@@ -1,5 +1,5 @@
 import { useState, useEffect, useReducer, useContext } from "react";
-import { ChevronRight, Globe, Speaker, ArrowRight, BookOpen, Clock, TrendingUp } from "react-feather"
+import { ChevronRight, Globe, Speaker, ArrowRight, BookOpen, Clock, TrendingUp, ExternalLink } from "react-feather"
 import Link from "next/link";
 import { ContentContext } from "@/contexts/content";
 import { shortAddress } from "@/helpers";
@@ -7,17 +7,16 @@ import { AccountContext } from "@/contexts/account";
 
 const Contents = () => {
 
-    const { loadAllSeries } = useContext(ContentContext)
+    const { series } = useContext(ContentContext)
 
     const [values, dispatch] = useReducer(
         (curVal: any, newVal: any) => ({ ...curVal, ...newVal }),
         {
-            series: []
+            // series: []
         }
     )
 
-    const { series } = values
-
+    const { } = values
 
     const [featuredWebtoons, setFeaturedWebtoons] = useState<any>([]);
     const [popularWebtoons, setPopularWebtoons] = useState<any>([]);
@@ -46,16 +45,6 @@ const Contents = () => {
             { id: 11, title: 'Parallel Realities', author: 'Zoe Chen', genre: 'Sci-Fi', imageUrl: '/api/placeholder/300/400', rating: 4.7 }
         ]);
     }, []);
-
-    useEffect(() => {
-        loadAllSeries().then(
-            (series: any) => {
-                dispatch({
-                    series
-                })
-            }
-        )
-    }, [])
 
     const categories = ['All', 'Romance', 'Action', 'Fantasy', 'Sci-Fi', 'Horror', 'Comedy', 'Drama', 'Thriller'];
 
@@ -122,11 +111,24 @@ const Contents = () => {
                                                 <span className="text-gray-600 text-sm">284</span>
                                             </div>
                                         </div>
-                                        <span className="text-sm text-blue-500 font-medium">
-                                            {/* Available in: {webtoon.language} */}
-                                            Current price{` `}<span className="text-blue-600 font-medium">42 ETH</span>
+                                        <span className="text-sm text-blue-500 font-medium"> 
+                                            {/* Current price{` `}<span className="text-blue-600 font-medium">42 ETH</span> */}
+                                            <Link href={`https://sepolia.basescan.org/token/${webtoon.tokenContract}`} target="_blank">
+                                            <button className="flex cursor-pointer hover:underline items-center text-sm text-blue-600 hover:text-blue-800">
+                                                <ExternalLink className="h-4 w-4 mr-1" />
+                                                Basescan
+                                            </button>
+                                        </Link>
                                         </span>
                                     </div>
+                                    {/* <div className="flex justify-center mt-4  space-x-4">
+                                        <Link href={`https://sepolia.basescan.org/token/${webtoon.tokenContract}`} target="_blank">
+                                            <button className="flex cursor-pointer hover:underline items-center text-sm text-blue-600 hover:text-blue-800">
+                                                <ExternalLink className="h-4 w-4 mr-1" />
+                                                View Token Contract
+                                            </button>
+                                        </Link>
+                                    </div> */}
                                 </div>
                             </div>
                         )
@@ -234,8 +236,6 @@ const DisplayCreatorName = ({ userId }: any) => {
     useEffect(() => {
         userId && getCreatorDisplayName(userId).then(setDisplayName)
     }, [userId])
-
-    console.log(displayName)
 
     return (
         <span>

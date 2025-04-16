@@ -2,6 +2,7 @@ import { createContext, useCallback, ReactNode, useContext, useEffect, useMemo, 
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../amplify/data/resource"
 import { AccountContext } from "./account"
+import { WalletContext } from "./wallet";
 
 const client = generateClient<Schema>();
 
@@ -13,7 +14,8 @@ type Props = {
 
 const Provider = ({ children }: Props) => {
 
-    const { profile } = useContext(AccountContext)
+    const { getCoinDetails } = useContext(WalletContext)
+    // const { profile } = useContext(AccountContext)
 
     const [values, dispatch] = useReducer(
         (curVal: any, newVal: any) => ({ ...curVal, ...newVal }),
@@ -25,36 +27,78 @@ const Provider = ({ children }: Props) => {
     const { series } = values
 
     useEffect(() => {
-        if (profile && profile.id) {
-            loadSeries(profile.id)
-        } else {
-            dispatch({
-                series: []
-            })
-        }
-    }, [profile])
+        loadAllSeries()
+    }, [])
 
-    const loadSeries = async (userId: any) => {
- 
-        const { data } = await client.models.Content.list({
-            filter: {
-                userId: {
-                    eq: userId
-                }
-            }
-        })
+    // useEffect(() => {
+    //     if (profile && profile.id) {
+    //         loadSeries(profile.id)
+    //     } else {
+    //         dispatch({
+    //             series: []
+    //         })
+    //     }
+    // }, [profile])
 
-        dispatch({
-            series: data
-        })
+    // const loadSeries = async (userId: any) => {
 
-    }
+    //     const { data } = await client.models.Content.list({
+    //         filter: {
+    //             userId: {
+    //                 eq: userId
+    //             }
+    //         }
+    //     })
+
+    //     dispatch({
+    //         series: data
+    //     })
+
+    // }
 
     const loadAllSeries = async () => {
         const { data } = await client.models.Content.list()
-        return data
+
+        let series: any = []
+
+        for (let eachContent of data) {
+
+            let coinData
+
+            if (eachContent.tokenContract) {
+
+                try {
+                    coinData = await getCoinDetails(eachContent.tokenContract)
+                } catch (e) {
+
+                }
+            }
+
+            series.push({
+                ...eachContent,
+                coinData
+            })
+
+        }
+
+        dispatch({
+            series
+        })
     }
- 
+
+    // const listCoins = async () => {
+    //     const { data } = await client.models.Content.list()
+
+    //     for (let eachContent of data) {
+    //         if (eachContent.tokenContract) {
+    //             const coinDetails = await getCoinDetails( eachContent.tokenContract )
+
+    //         }
+    //     }
+
+    //     return []
+    // }
+
     // const updateProfile = useCallback(async ({ id, displayName }: any) => {
 
     //     await client.models.User.update({
@@ -74,8 +118,7 @@ const Provider = ({ children }: Props) => {
 
     const contentContext: any = useMemo(
         () => ({
-            series,
-            loadAllSeries
+            series
         }),
         [
             series

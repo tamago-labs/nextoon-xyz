@@ -19,13 +19,16 @@ import {
     signMessage as wagmiSignMessage,
     writeContract,
     simulateContract,
-    waitForTransactionReceipt
+    waitForTransactionReceipt,
+    getBalance
 } from '@web3-onboard/wagmi'
 import { ethers } from 'ethers'
-import { parseEther, Address, isHex, fromHex } from 'viem'
-import { createCoinCall, getCoinCreateFromLogs } from "@zoralabs/coins-sdk";
+import { parseEther, Address, isHex, fromHex, createPublicClient, http } from 'viem'
+import { baseSepolia } from "viem/chains"
+import { createCoinCall, getCoinCreateFromLogs, getOnchainCoinDetails, getCoin } from "@zoralabs/coins-sdk";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../amplify/data/resource"
+
 
 const client = generateClient<Schema>();
 
@@ -43,6 +46,11 @@ const baseSepoliaTestnet = {
     label: 'Base Sepolia',
     rpcUrl: 'https://sepolia.base.org'
 }
+
+const publicClient = createPublicClient({
+    chain: baseSepolia,
+    transport: http("https://sepolia.base.org"),
+})
 
 const chains = [baseSepoliaTestnet]
 const wallets = [injectedModule()]
@@ -168,13 +176,40 @@ const Provider = ({ children }: Props) => {
         }
     }, [wallet, wagmiConfig, web3Onboard])
 
+    const getCoinDetails = useCallback(async (tokenAddress: any) => {
+
+        const response = await getCoin({
+            address: tokenAddress,
+            chain: baseSepolia.id
+        });
+
+        const coin = response.data?.zora20Token;
+
+        // console.log("Coin Details:");
+        // console.log("- Name:", coin.name);
+        // console.log("- Symbol:", coin.symbol);
+        // console.log("- Description:", coin.description);
+        // console.log("- Total Supply:", coin.totalSupply);
+        // console.log("- Market Cap:", coin.marketCap);
+        // console.log("- 24h Volume:", coin.volume24h);
+        // console.log("- Creator:", coin.creatorAddress);
+        // console.log("- Created At:", coin.createdAt);
+        // console.log("- Unique Holders:", coin.uniqueHolders);
+
+        return coin
+
+    }, [])
+
+   
+
     const walletContext: any = useMemo(
         () => ({
             defaultChain: DEFAULT_CHAIN,
             signMessage,
             switchWagmiChain,
             wallet,
-            createCoin
+            createCoin,
+            getCoinDetails
         }),
         [
             signMessage,

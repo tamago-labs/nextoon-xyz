@@ -26,21 +26,34 @@ import Dashboard from './Dashboard';
 import Link from 'next/link';
 import { WalletContext } from '@/contexts/wallet';
 import { ContentContext } from '@/contexts/content';
+import { AccountContext } from '@/contexts/account';
 
 const CreateContainer = () => {
 
     const { series } = useContext(ContentContext)
+    const { profile } = useContext(AccountContext)
 
     const [activeModal, setActiveModal] = useState<any>(null);
 
     const [values, dispatch] = useReducer(
         (curVal: any, newVal: any) => ({ ...curVal, ...newVal }),
         {
-
+            mySeries: []
         }
     )
 
-    const { } = values
+    const { mySeries } = values
+
+    useEffect(() => {
+
+        if (series && series.length > 0 && profile && profile.id) {
+            const mySeries = series.filter((item: any) => item.userId === profile.id)
+            dispatch({
+                mySeries
+            })
+        }
+
+    }, [series, profile])
 
     // Open a specific modal
     const openModal = (modalName: any) => {
@@ -218,7 +231,7 @@ const CreateContainer = () => {
                         </button> */}
                     </div>
 
-                    {series.length === 0 && (
+                    {mySeries.length === 0 && (
                         <div className='flex text-gray-600 justify-between items-center h-[200px]'>
                             <div className='mx-auto'>
                                 No content found. Connect your wallet and create your first Webtoon series!
@@ -227,7 +240,7 @@ const CreateContainer = () => {
                         </div>
                     )}
 
-                    {series.length > 0 && (
+                    {mySeries.length > 0 && (
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {/* {[
                                 {
@@ -276,7 +289,7 @@ const CreateContainer = () => {
                                     </div>
                                 </div>
                             ))} */}
-                            {series.map((item: any, index: number) => {
+                            {mySeries.map((item: any, index: number) => {
 
                                 let gradientBg = ""
 
@@ -303,11 +316,15 @@ const CreateContainer = () => {
                                             </div>
                                             <div className="flex justify-between text-sm mb-2">
                                                 <span className="text-gray-500">Readers</span>
-                                                <span className="font-medium text-gray-800">11333</span>
+                                                <span className="font-medium text-gray-800">
+                                                    { item && item.coinData ? item.coinData.uniqueHolders : 0}
+                                                </span>
                                             </div>
                                             <div className="flex justify-between text-sm">
-                                                <span className="text-gray-500">Token Price</span>
-                                                <span className="font-medium text-gray-800">0.42 ETH</span>
+                                                <span className="text-gray-500">Market Cap</span>
+                                                <span className="font-medium text-gray-800">
+                                                ${ item && item.coinData ? item.coinData.marketCap : 0}
+                                                </span>
                                             </div>
 
                                         </div>
@@ -317,7 +334,7 @@ const CreateContainer = () => {
                                                     <ExternalLink className="h-4 w-4 mr-1" />
                                                     View Token Contract
                                                 </button>
-                                            </Link> 
+                                            </Link>
                                         </div>
 
                                     </div>

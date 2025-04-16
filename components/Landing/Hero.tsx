@@ -23,7 +23,7 @@ const Hero = () => {
                             <Link href="/create" className="block w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-center  shadow-lg shadow-indigo-500/30 transition duration-150">
                                 Start Yours
                             </Link>
-                            <Link href="/originals" className="block w-full md:w-auto px-8 py-3 bg-gray-100 shadow-lg text-gray-800 font-medium rounded-lg text-center border border-gray-200 hover:bg-gray-200 transition duration-150">
+                            <Link href="/explore" className="block w-full md:w-auto px-8 py-3 bg-gray-100 shadow-lg text-gray-800 font-medium rounded-lg text-center border border-gray-200 hover:bg-gray-200 transition duration-150">
                                 Explore Originals
                             </Link>
                         </div>
@@ -63,24 +63,22 @@ const Hero = () => {
                                     <div className="relative h-80 md:h-[calc(36rem-6rem)]">
                                         <img
                                             className="w-full h-full object-cover"
-                                            src="./images/mock/poster-1.jpg"
+                                            src="./images/mock/poster-5.png"
                                             alt="Webtoon preview"
                                         />
                                         <div className="absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-gray-900 to-transparent"></div>
                                         <div className="absolute bottom-0 inset-x-0 p-6">
                                             <div className="flex justify-between items-end">
-                                                <div>
-                                                    {/* <p className="text-indigo-200 text-sm font-medium">Featured Webtoon</p> */}
-                                                    <h3 className="text-white text-xl font-bold">Parallel Dimensions</h3>
+                                                <div> 
+                                                    <h3 className="text-white text-xl font-bold">My Webtoon Story</h3>
                                                     <div className="mt-2 flex items-center">
                                                         <div className="h-6 w-6 rounded-full bg-blue-600"></div>
-                                                        <p className="ml-2 text-gray-300 text-sm">@creator_studio</p>
+                                                        <p className="ml-2 text-gray-300 text-sm">@meme_studio</p>
                                                     </div>
-                                                </div>
-                                                <div className="bg-blue-600 rounded-lg px-4 py-2 flex items-center space-x-1">
-                                                 
-                                                    <span className="text-white text-sm font-medium">Collect Coin</span>
-                                                </div>
+                                                </div> 
+                                                <Link href="/trade" className="bg-blue-600 rounded-lg px-4 py-2 flex items-center space-x-1">
+                                                    <span className="text-white text-sm font-medium">Trade Coin</span>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -104,7 +102,7 @@ const Hero = () => {
                                                 </div>
                                             </div>
                                             <div className="text-gray-600 text-sm">
-                                                <span className="text-blue-600 font-medium">42 ETH</span> / Current price
+                                            Current price{` `}<span className="text-blue-600 font-medium">42 ETH</span> 
                                             </div>
                                         </div>
                                     </div>
