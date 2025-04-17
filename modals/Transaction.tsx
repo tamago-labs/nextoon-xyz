@@ -29,6 +29,12 @@ const TransactionModal = ({ visible, close, transactionHash, amount, tokenSymbol
                 </div>
 
                 <div className="flex space-x-4">
+                     <button
+                        onClick={close}
+                        className="w-1/2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                    >
+                        Close
+                    </button>
                      <a
                         href={`https://sepolia.basescan.org/tx/${transactionHash}`}
                         target="_blank"
@@ -38,12 +44,7 @@ const TransactionModal = ({ visible, close, transactionHash, amount, tokenSymbol
                         View on BaseScan
                         <ExternalLink className="h-4 w-4 ml-1" />
                     </a>
-                    <button
-                        onClick={close}
-                        className="w-1/2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-                    >
-                        Close
-                    </button>
+                   
                    
                 </div>
             </div>

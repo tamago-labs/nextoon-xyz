@@ -229,6 +229,14 @@ const Sell = ({ handleInputChange, inputAmount, showInfo }: any) => {
                 <div className="bg-gray-50 rounded-lg p-3 mb-4">
                     <div className="flex justify-between items-center mb-1">
                         <div className="text-sm text-gray-700">Rate</div>
+                        <div className="text-sm text-gray-700">1 {selectedToken?.coinData?.symbol} = {`${selectedToken?.tokenPrice.toFixed(12)}`} ETH</div>
+                    </div>
+                    <div className="flex justify-between items-center mb-1">
+                        <div className="text-sm text-gray-700">Estimated amount</div>
+                        <div className="text-sm text-gray-700">{`${(Number(inputAmount) * selectedToken?.tokenPrice).toFixed(12) } `}ETH</div>
+                    </div>
+                    {/* <div className="flex justify-between items-center mb-1">
+                        <div className="text-sm text-gray-700">Rate</div>
                         <div className="text-sm text-gray-700">1 {selectedToken?.coinData?.symbol} = 1234 ETH</div>
                     </div>
 
@@ -243,7 +251,7 @@ const Sell = ({ handleInputChange, inputAmount, showInfo }: any) => {
                             <Info className="h-3 w-3 text-gray-400 ml-1" />
                         </div>
                         <div className="text-sm text-green-500">{"<"}0.01%</div>
-                    </div>
+                    </div> */}
                 </div>
             ) : ""}
 
