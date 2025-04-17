@@ -48,8 +48,11 @@ const Provider = ({ children }: Props) => {
                 }
             }
 
+            const { data } = await eachContent.episodes()
+ 
             series.push({
                 ...eachContent,
+                episodes: data,
                 coinData
             })
 
@@ -66,13 +69,25 @@ const Provider = ({ children }: Props) => {
             tokenPrice
         })
     }
-    
 
+    const addEpisode = async ({contentId, episodeTitle, episodeDescription, isTokenGated, minimumToken, pages }: any) => {
+        await client.models.Episode.create({
+            contentId,
+            title: episodeTitle,
+            description: episodeDescription,
+            isActive: true,
+            isTokenGated,
+            minimumToken,
+            pages
+        })
+    }   
+    
 
     const contentContext: any = useMemo(
         () => ({
             series,
-            updatePrice
+            updatePrice,
+            addEpisode
         }),
         [
             series

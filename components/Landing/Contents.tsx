@@ -8,16 +8,7 @@ import { AccountContext } from "@/contexts/account";
 const Contents = () => {
 
     const { series } = useContext(ContentContext)
-
-    const [values, dispatch] = useReducer(
-        (curVal: any, newVal: any) => ({ ...curVal, ...newVal }),
-        {
-            // series: []
-        }
-    )
-
-    const { } = values
-
+ 
     const [featuredWebtoons, setFeaturedWebtoons] = useState<any>([]);
     const [popularWebtoons, setPopularWebtoons] = useState<any>([]);
     const [newReleases, setNewReleases] = useState<any>([]);
@@ -112,13 +103,13 @@ const Contents = () => {
                                             </div>
                                         </div>
                                         <span className="text-sm text-blue-500 font-medium"> 
-                                            {/* Current price{` `}<span className="text-blue-600 font-medium">42 ETH</span> */}
-                                            <Link href={`https://sepolia.basescan.org/token/${webtoon.tokenContract}`} target="_blank">
+                                            Price{` `}<span className="text-blue-600 font-medium">{(webtoon.tokenPrice*1000000000).toLocaleString()} Gwei</span>
+                                            {/* <Link href={`https://sepolia.basescan.org/token/${webtoon.tokenContract}`} target="_blank">
                                             <button className="flex cursor-pointer hover:underline items-center text-sm text-blue-600 hover:text-blue-800">
                                                 <ExternalLink className="h-4 w-4 mr-1" />
                                                 Basescan
                                             </button>
-                                        </Link>
+                                        </Link> */}
                                         </span>
                                     </div>
                                     {/* <div className="flex justify-center mt-4  space-x-4">
@@ -133,14 +124,8 @@ const Contents = () => {
                             </div>
                         )
                     })}
-
-
-
                 </div>
             </section>
-
-
-
 
 
             {/* Categories Bar */}

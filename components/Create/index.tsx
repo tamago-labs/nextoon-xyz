@@ -27,6 +27,7 @@ import Link from 'next/link';
 import { WalletContext } from '@/contexts/wallet';
 import { ContentContext } from '@/contexts/content';
 import { AccountContext } from '@/contexts/account';
+import NewEpisodeModal from '@/modals/NewEpisode';
 
 const CreateContainer = () => {
 
@@ -65,6 +66,8 @@ const CreateContainer = () => {
         setActiveModal(null);
     };
 
+    console.log("mySeries: ", mySeries)
+
     return (
         <div className="min-h-screen relative ">
 
@@ -80,6 +83,15 @@ const CreateContainer = () => {
                     close={closeModal}
                 />
             )}
+            {activeModal === "newEpisode" && (
+                <NewEpisodeModal
+                    visible={activeModal === "newEpisode"}
+                    close={closeModal}
+                    mySeries={mySeries}
+
+                />
+            )}
+
 
 
             {/* Main Content */}
@@ -312,20 +324,22 @@ const CreateContainer = () => {
                                         <div className="p-4">
                                             <div className="flex justify-between text-sm mb-2">
                                                 <span className="text-gray-500">Episodes</span>
-                                                <span className="font-medium text-gray-800">0</span>
+                                                <span className="font-medium text-gray-800">
+                                                    {item.episodes.length}
+                                                </span>
                                             </div>
                                             <div className="flex justify-between text-sm mb-2">
                                                 <span className="text-gray-500">Readers</span>
                                                 <span className="font-medium text-gray-800">
-                                                    { item && item.coinData ? item.coinData.uniqueHolders : 0}
+                                                    {item && item.coinData ? item.coinData.uniqueHolders : 0}
                                                 </span>
                                             </div>
-                                            <div className="flex justify-between text-sm">
+                                            {/* <div className="flex justify-between text-sm">
                                                 <span className="text-gray-500">Market Cap</span>
                                                 <span className="font-medium text-gray-800">
                                                 ${ item && item.coinData ? item.coinData.marketCap : 0}
                                                 </span>
-                                            </div>
+                                            </div> */}
 
                                         </div>
                                         <div className="flex justify-center mt-4 mb-4 space-x-4">

@@ -2,7 +2,7 @@ import { useContext } from "react"
 import BaseModal from "./Base"
 import { WalletContext } from "@/contexts/wallet"
 
-const ConnectedModal = ({ visible, title, close, children }: any) => {
+const ConnectedModal = ({ visible, title, close, children, maxWidth = "max-w-2xl" }: any) => {
 
     const { wallet } = useContext(WalletContext)
 
@@ -11,8 +11,8 @@ const ConnectedModal = ({ visible, title, close, children }: any) => {
             visible={visible}
             title={wallet ? title : "Connect Your Wallet First"}
             close={close}
+            maxWidth={maxWidth}
         >
-
             {!wallet
                 ?
                 <div className="text-center py-4 flex flex-col">
@@ -26,7 +26,6 @@ const ConnectedModal = ({ visible, title, close, children }: any) => {
                     {children}
                 </>
             }
-
         </BaseModal>
     )
 }
