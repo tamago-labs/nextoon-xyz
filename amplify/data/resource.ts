@@ -23,7 +23,8 @@ const schema = a.schema({
       isTestnet: a.boolean(),
       tokenName: a.string(),
       tokenSymbol: a.string(),
-      tokenContract: a.string()
+      tokenContract: a.string(),
+      tokenPrice: a.float()
     })
     .authorization((allow) => [
       allow.publicApiKey()

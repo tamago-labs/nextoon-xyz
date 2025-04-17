@@ -234,13 +234,23 @@ const Provider = ({ children }: Props) => {
 
         console.log("receipt : ", receipt)
 
-        const tradeEvent = getTradeFromLogs(receipt, direction);
+        const tradeEvent: any = getTradeFromLogs(receipt, direction);
 
         if (tradeEvent) {
             console.log(tradeEvent);
             // tradeEvent.coinsPurchased <-- buy
             // tradeEvent.amountPurchased <-- sell
+
+            return {
+                transactionHash: hash,
+                amount: direction === "buy" ? formatEther(tradeEvent.coinsPurchased) : formatEther(tradeEvent.amountPurchased)
+            }
+
+        } else {
+            return undefined
         }
+ 
+        
 
     }, [wallet, wagmiConfig, web3Onboard])
 

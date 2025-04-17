@@ -16,8 +16,9 @@ import { useConnectWallet } from '@web3-onboard/react'
 import { WalletContext } from '@/contexts/wallet';
 
 
-const Buy = ({ ethBalance, handleInputChange, inputAmount }: any) => {
+const Buy = ({ ethBalance, handleInputChange, inputAmount, showInfo }: any) => {
 
+    const { updatePrice } = useContext(ContentContext)
     const { tradeCoin } = useContext(WalletContext)
 
     const [values, dispatch] = useReducer(
@@ -61,11 +62,22 @@ const Buy = ({ ethBalance, handleInputChange, inputAmount }: any) => {
 
         try {
 
-            await tradeCoin({
+            const output = await tradeCoin({
                 direction: "buy",
                 tokenAddress: selectedToken.tokenContract,
                 amount: inputAmount
             })
+
+            if (output) {
+                showInfo({
+                    transactionHash: output.transactionHash,
+                    amount: output.amount,
+                    tokenSymbol: selectedToken.tokenSymbol
+                })
+                const currentPrice = Number(inputAmount) / Number(output.amount)
+                console.log("currentPrice : ", currentPrice)
+                await updatePrice( selectedToken.id, currentPrice )
+            }
 
         } catch (e: any) {
             console.log(e)

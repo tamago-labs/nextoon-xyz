@@ -17,9 +17,9 @@ import { WalletContext } from '@/contexts/wallet';
 
 
 
-const Sell = ({ handleInputChange, inputAmount }: any) => {
+const Sell = ({ handleInputChange, inputAmount, showInfo }: any) => {
 
-
+    const { updatePrice } = useContext(ContentContext)
     const { getTokenBalance, tradeCoin } = useContext(WalletContext)
 
     const [values, dispatch] = useReducer(
@@ -72,11 +72,22 @@ const Sell = ({ handleInputChange, inputAmount }: any) => {
 
         try {
 
-            await tradeCoin({
+            const output = await tradeCoin({
                 direction: "sell",
                 tokenAddress: selectedToken.tokenContract,
                 amount: inputAmount
             })
+
+            if (output) {
+                showInfo({
+                    transactionHash: output.transactionHash,
+                    amount: output.amount,
+                    tokenSymbol: selectedToken.tokenSymbol
+                })
+                const currentPrice = Number(output.amount) / Number(inputAmount)
+                console.log("currentPrice : ", currentPrice)
+                await updatePrice( selectedToken.id, currentPrice )
+            }
 
         } catch (e: any) {
             console.log(e)

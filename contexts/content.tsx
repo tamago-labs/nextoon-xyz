@@ -15,8 +15,7 @@ type Props = {
 const Provider = ({ children }: Props) => {
 
     const { getCoinDetails } = useContext(WalletContext)
-    // const { profile } = useContext(AccountContext)
-
+    
     const [values, dispatch] = useReducer(
         (curVal: any, newVal: any) => ({ ...curVal, ...newVal }),
         {
@@ -29,32 +28,7 @@ const Provider = ({ children }: Props) => {
     useEffect(() => {
         loadAllSeries()
     }, [])
-
-    // useEffect(() => {
-    //     if (profile && profile.id) {
-    //         loadSeries(profile.id)
-    //     } else {
-    //         dispatch({
-    //             series: []
-    //         })
-    //     }
-    // }, [profile])
-
-    // const loadSeries = async (userId: any) => {
-
-    //     const { data } = await client.models.Content.list({
-    //         filter: {
-    //             userId: {
-    //                 eq: userId
-    //             }
-    //         }
-    //     })
-
-    //     dispatch({
-    //         series: data
-    //     })
-
-    // }
+ 
 
     const loadAllSeries = async () => {
         const { data } = await client.models.Content.list()
@@ -86,39 +60,19 @@ const Provider = ({ children }: Props) => {
         })
     }
 
-    // const listCoins = async () => {
-    //     const { data } = await client.models.Content.list()
+    const updatePrice = async (contentId: any, tokenPrice: any) => {
+        await client.models.Content.update({
+            id: contentId,
+            tokenPrice
+        })
+    }
+    
 
-    //     for (let eachContent of data) {
-    //         if (eachContent.tokenContract) {
-    //             const coinDetails = await getCoinDetails( eachContent.tokenContract )
-
-    //         }
-    //     }
-
-    //     return []
-    // }
-
-    // const updateProfile = useCallback(async ({ id, displayName }: any) => {
-
-    //     await client.models.User.update({
-    //         id,
-    //         displayName
-    //     })
-
-    //     const entry = await client.models.User.get({
-    //         id
-    //     })
-
-    //     dispatch({
-    //         profile: entry.data
-    //     })
-
-    // },[])
 
     const contentContext: any = useMemo(
         () => ({
-            series
+            series,
+            updatePrice
         }),
         [
             series
