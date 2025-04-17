@@ -24,9 +24,23 @@ const schema = a.schema({
       tokenName: a.string(),
       tokenSymbol: a.string(),
       tokenContract: a.string(),
-      tokenPrice: a.float()
+      tokenPrice: a.float(),
+      episodes: a.hasMany('Episode', "contentId"),
     })
     .authorization((allow) => [
+      allow.publicApiKey()
+    ]),
+  Episode: a
+    .model({
+      contentId: a.id().required(),
+      content: a.belongsTo('Content', "contentId"),
+      title: a.string(),
+      description: a.string(),
+      isActive: a.boolean(),
+      pages: a.string().array(),
+      isTokenGated: a.boolean(),
+      minimumToken: a.integer()
+    }).authorization((allow) => [
       allow.publicApiKey()
     ]),
 });
